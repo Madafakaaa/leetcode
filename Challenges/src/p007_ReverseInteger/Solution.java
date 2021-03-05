@@ -21,7 +21,7 @@ class Solution {
             } else {
                 return -Integer.parseInt(sb.toString());
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;

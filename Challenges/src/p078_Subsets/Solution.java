@@ -12,7 +12,7 @@ class Solution {
         return res;
     }
 
-    public void add(List<Integer> list,int[] nums){
+    public void add(List<Integer> list, int[] nums) {
 
     }
 

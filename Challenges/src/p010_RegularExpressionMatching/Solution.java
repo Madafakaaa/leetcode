@@ -7,12 +7,11 @@ class Solution {
     public boolean isMatch(String s, String p) {
         Pattern pat = Pattern.compile(p);
         Matcher mat = pat.matcher(s);
-        try{
-            while(mat.find()){
-                if(mat.group().equals(s)) return true;
+        try {
+            while (mat.find()) {
+                if (mat.group().equals(s)) return true;
             }
-        }
-        catch(IllegalStateException e){
+        } catch (IllegalStateException e) {
             return false;
         }
         return false;

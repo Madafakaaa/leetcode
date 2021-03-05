@@ -12,9 +12,9 @@ import java.util.List;
 class Solution {
 
     public List<Integer> grayCode(int n) {
-        ArrayList<Integer> res = new ArrayList<Integer>((int) Math.pow(2,n));
-        int[][] matrix = new int[(int) Math.pow(2,n)][n];
-        for(int i=0;i<Math.pow(2,n);i++) {
+        ArrayList<Integer> res = new ArrayList<Integer>((int) Math.pow(2, n));
+        int[][] matrix = new int[(int) Math.pow(2, n)][n];
+        for (int i = 0; i < Math.pow(2, n); i++) {
             res.add(i);
         }
         return res;

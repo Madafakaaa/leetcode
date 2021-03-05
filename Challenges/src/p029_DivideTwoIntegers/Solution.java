@@ -19,7 +19,7 @@ class Solution {
         int count = 1;
         while (res > dividend - res) {
             res = res + res;
-            count  = count * 2;
+            count = count * 2;
         }
         if (positive) {
             return count + divide(dividend - res, divisor);

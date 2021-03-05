@@ -1,7 +1,5 @@
 package p621_TaskScheduler;
 
-import java.util.PriorityQueue;
-
 class Solution {
     public int leastInterval(char[] tasks, int n) {
         // frequencies of the tasks

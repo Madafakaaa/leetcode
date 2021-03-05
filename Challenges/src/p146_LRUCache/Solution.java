@@ -18,7 +18,7 @@ class LRUCache {
     }
 
     public int get(int key) {
-        if(map.containsKey(key)){
+        if (map.containsKey(key)) {
             queue.remove(key);
             queue.add(key);
         }
@@ -26,14 +26,14 @@ class LRUCache {
     }
 
     public void put(int key, int value) {
-        if(map.containsKey(key)){
+        if (map.containsKey(key)) {
             queue.remove(key);
             queue.add(key);
-            map.put(key,value);
-        }else{
-            if(queue.size()>=limit) map.remove(queue.poll());
+            map.put(key, value);
+        } else {
+            if (queue.size() >= limit) map.remove(queue.poll());
             queue.add(key);
-            map.put(key,value);
+            map.put(key, value);
         }
     }
 }

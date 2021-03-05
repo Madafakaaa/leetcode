@@ -16,7 +16,7 @@ class Solution {
         });
 
         List<int[]> output = new LinkedList<>();
-        for(int[] p : people){
+        for (int[] p : people) {
             output.add(p[1], p);
         }
 
