@@ -2,7 +2,6 @@ package PalindromeLinkedList;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 class Solution {
     public boolean isPalindrome(ListNode head) {

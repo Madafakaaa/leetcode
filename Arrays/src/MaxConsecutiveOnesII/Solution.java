@@ -1,7 +1,5 @@
 package MaxConsecutiveOnesII;
 
-import java.util.ArrayList;
-
 class Solution {
     public int findMaxConsecutiveOnes(int[] nums) {
         int left = 0, flip = 1, result = 0;
@@ -10,7 +8,7 @@ class Solution {
             if (nums[right] == 0)
                 flip--;
 
-            while (flip < 0 && left < right)  {
+            while (flip < 0 && left < right) {
                 if (nums[left] == 0)
                     flip++;
 

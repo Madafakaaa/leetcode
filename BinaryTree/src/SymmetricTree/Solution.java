@@ -5,10 +5,10 @@ import java.util.List;
 
 class Solution {
     public boolean isSymmetric(TreeNode root) {
-        if(root==null) return true;
-        if(root.left==null&&root.right==null) return true;
-        if(root.left!=null&&root.right!=null) {
-            if(inorderTraversal(root).toString().equals(inorderTraversalReversed(root).toString())){
+        if (root == null) return true;
+        if (root.left == null && root.right == null) return true;
+        if (root.left != null && root.right != null) {
+            if (inorderTraversal(root).toString().equals(inorderTraversalReversed(root).toString())) {
                 return true;
             }
         }
@@ -18,7 +18,7 @@ class Solution {
 
     public List<Integer> inorderTraversal(TreeNode root) {
         LinkedList<Integer> ll = new LinkedList<>();
-        if(root==null){
+        if (root == null) {
             ll.add(0);
             return ll;
         }
@@ -30,7 +30,7 @@ class Solution {
 
     public List<Integer> inorderTraversalReversed(TreeNode root) {
         LinkedList<Integer> ll = new LinkedList<>();
-        if(root==null){
+        if (root == null) {
             ll.add(0);
             return ll;
         }

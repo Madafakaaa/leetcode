@@ -4,7 +4,8 @@ class Node {
     public int val;
     public Node next;
 
-    public Node() {}
+    public Node() {
+    }
 
     public Node(int _val) {
         val = _val;

@@ -23,15 +23,9 @@ class Solution {
             if (depth > maxDepth) {
                 maxDepth = depth;
                 res = root.val;
-            } else if (depth == maxDepth) {
-                res += root.val;
-            }
+            } else if (depth == maxDepth) res += root.val;
         }
-        if (root.left != null) {
-            process(root.left, depth + 1);
-        }
-        if (root.right != null) {
-            process(root.right, depth + 1);
-        }
+        if (root.left != null) process(root.left, depth + 1);
+        if (root.right != null) process(root.right, depth + 1);
     }
 }

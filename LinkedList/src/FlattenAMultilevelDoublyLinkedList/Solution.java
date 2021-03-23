@@ -16,14 +16,14 @@ class Solution {
     public Node flatten(Node head) {
         Stack<Node> stack = new Stack<>();
         Node temp = head;
-        while(temp!=null){
-            if(temp.child!=null){
-                if(temp.next!=null) stack.push(temp.next);
+        while (temp != null) {
+            if (temp.child != null) {
+                if (temp.next != null) stack.push(temp.next);
                 temp.child.prev = temp;
                 temp.next = temp.child;
                 temp.child = null;
             }
-            if(temp.next==null&&!stack.empty()){
+            if (temp.next == null && !stack.empty()) {
                 Node next = stack.pop();
                 next.prev = temp;
                 temp.next = next;

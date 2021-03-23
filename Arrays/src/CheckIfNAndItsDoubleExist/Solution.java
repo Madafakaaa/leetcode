@@ -1,18 +1,17 @@
 package CheckIfNAndItsDoubleExist;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 class Solution {
 
     public boolean checkIfExist(int[] arr) {
         HashSet<Integer> set = new HashSet<>();
-        for(int i : arr){
-            if(set.contains(i*2)){
+        for (int i : arr) {
+            if (set.contains(i * 2)) {
                 return true;
             }
-            if(i%2==0){
-                if(set.contains(i/2)){
+            if (i % 2 == 0) {
+                if (set.contains(i / 2)) {
                     return true;
                 }
             }

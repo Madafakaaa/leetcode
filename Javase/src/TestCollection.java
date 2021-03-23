@@ -1,9 +1,6 @@
-import com.sun.org.apache.xerces.internal.parsers.CachingParserPool;
-
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.SynchronousQueue;
 
 public class TestCollection {
 

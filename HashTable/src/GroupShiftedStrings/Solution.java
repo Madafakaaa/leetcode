@@ -16,11 +16,11 @@ class Solution {
         return new ArrayList<>(map.values());
     }
 
-    public String getPattern(String str){
+    public String getPattern(String str) {
         StringBuffer result = new StringBuffer("0");
-        for(int i=1;i<str.length();i++){
+        for (int i = 1; i < str.length(); i++) {
             result.append('-');
-            result.append((str.charAt(i)-str.charAt(i-1)+26)%26);
+            result.append((str.charAt(i) - str.charAt(i - 1) + 26) % 26);
         }
         return result.toString();
     }

@@ -8,12 +8,12 @@ class Solution {
         ListNode evenTail = evenHead;
         ListNode temp = head;
         int index = 1;
-        while(temp!=null){
-            if(index%2==1){
-                oddTail.next=temp;
+        while (temp != null) {
+            if (index % 2 == 1) {
+                oddTail.next = temp;
                 oddTail = temp;
-            }else{
-                evenTail.next=temp;
+            } else {
+                evenTail.next = temp;
                 evenTail = temp;
             }
             temp = temp.next;

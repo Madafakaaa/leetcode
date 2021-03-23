@@ -8,12 +8,12 @@ class Solution {
 
     public int removeDuplicates(int[] nums) {
         HashSet<Integer> set = new HashSet<Integer>();
-        for(int i=0;i<nums.length;i++){
+        for (int i = 0; i < nums.length; i++) {
             set.add(nums[i]);
         }
         Iterator<Integer> ite = set.iterator();
         int result = 0;
-        while(ite.hasNext()){
+        while (ite.hasNext()) {
             nums[result] = ite.next();
             result++;
         }
