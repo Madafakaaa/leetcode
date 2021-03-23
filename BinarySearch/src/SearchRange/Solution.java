@@ -11,9 +11,8 @@ class Solution {
             int mid = (lo + hi) / 2;
             if (nums[mid] > target || (left && target == nums[mid])) {
                 hi = mid;
-            }
-            else {
-                lo = mid+1;
+            } else {
+                lo = mid + 1;
             }
         }
 
@@ -32,7 +31,7 @@ class Solution {
         }
 
         targetRange[0] = leftIdx;
-        targetRange[1] = extremeInsertionIndex(nums, target, false)-1;
+        targetRange[1] = extremeInsertionIndex(nums, target, false) - 1;
 
         return targetRange;
     }

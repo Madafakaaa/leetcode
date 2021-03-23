@@ -16,7 +16,7 @@ class Solution {
         Queue<Integer> queue = new LinkedList<>();
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
-                if (rooms[i][j]== 0) {
+                if (rooms[i][j] == 0) {
                     queue.offer(i * col + j);  //convert coordinate pair to index of the cell
                 }
             }

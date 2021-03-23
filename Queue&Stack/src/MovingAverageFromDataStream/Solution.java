@@ -1,7 +1,6 @@
 package MovingAverageFromDataStream;
 
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 class MovingAverage {
@@ -9,23 +8,25 @@ class MovingAverage {
     Queue<Integer> queue;
     int size;
 
-    /** Initialize your data structure here. */
+    /**
+     * Initialize your data structure here.
+     */
     public MovingAverage(int size) {
         queue = new LinkedList<>();
         this.size = size;
     }
 
     public double next(int val) {
-        if(queue.size()>=size){
+        if (queue.size() >= size) {
             queue.poll();
         }
         queue.add(val);
 
         double res = 0;
-        for(Integer i : queue){
+        for (Integer i : queue) {
             res += i;
         }
-        return res/queue.size();
+        return res / queue.size();
     }
 }
 

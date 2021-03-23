@@ -12,15 +12,15 @@ class Solution {
         set.add(0);
         Queue<Integer> queue = new LinkedList<>();
         queue.add(0);
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             int currRoom = queue.poll();
-            for(Integer k : rooms.get(currRoom)){
-                if(set.contains(k)) continue;
+            for (Integer k : rooms.get(currRoom)) {
+                if (set.contains(k)) continue;
                 set.add(k);
                 queue.add(k);
             }
         }
-        if(set.size()==roomsNum) return true;
+        if (set.size() == roomsNum) return true;
         return false;
     }
 }

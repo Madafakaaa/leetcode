@@ -1,7 +1,5 @@
 package RotateArray;
 
-import java.util.ArrayList;
-
 class Solution {
     public void rotate(int[] nums, int k) {
         int[] a = new int[nums.length];

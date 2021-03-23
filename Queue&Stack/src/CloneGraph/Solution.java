@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 class Solution {
 
-    private HashMap<Node, Node> visited = new HashMap <> ();
+    private HashMap<Node, Node> visited = new HashMap<>();
 
     public Node cloneGraph(Node node) {
         if (node == null) {
@@ -26,7 +26,7 @@ class Solution {
 
         // Iterate through the neighbors to generate their clones
         // and prepare a list of cloned neighbors to be added to the cloned node.
-        for (Node neighbor: node.neighbors) {
+        for (Node neighbor : node.neighbors) {
             cloneNode.neighbors.add(cloneGraph(neighbor));
         }
         return cloneNode;
