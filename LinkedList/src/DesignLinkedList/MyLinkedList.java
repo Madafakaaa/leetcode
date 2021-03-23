@@ -4,6 +4,7 @@ class MyLinkedList {
 
     private ListNode head;
     private int size;
+
     /**
      * Initialize your data structure here.
      */
