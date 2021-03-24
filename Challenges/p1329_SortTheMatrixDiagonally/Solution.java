@@ -17,11 +17,11 @@ class Solution {
         int height = mat.length, width = mat[0].length;
         ArrayList<Integer>[] lines = new ArrayList[height + width - 1];
         int index = 0;
-        for (int i = height - 1; i >= 0; i--) {
+        for (int i = 0; i < height; i++) {
             ArrayList<Integer> newLine = new ArrayList<>();
             int x = 0, y = i;
             while (x < width && y < height) {
-                newLine.add(mat[x][y]);
+                newLine.add(mat[y][x]);
                 x++;
                 y++;
             }
@@ -33,7 +33,7 @@ class Solution {
             ArrayList<Integer> newLine = new ArrayList<>();
             int x = i, y = 0;
             while (x < width && y < height) {
-                newLine.add(mat[x][y]);
+                newLine.add(mat[y][x]);
                 x++;
                 y++;
             }
@@ -42,5 +42,30 @@ class Solution {
             index++;
         }
         index = 0;
+        for (int i = 0; i < height; i++) {
+            ArrayList<Integer> line = lines[index];
+            int x = 0, y = i;
+            int temp = 0;
+            while (x < width && y < height) {
+                mat[y][x] = line.get(temp);
+                x++;
+                y++;
+                temp++;
+            }
+            index++;
+        }
+        for (int i = 1; i < width; i++) {
+            ArrayList<Integer> line = lines[index];
+            int x = i, y = 0;
+            int temp = 0;
+            while (x < width && y < height) {
+                mat[y][x] = line.get(temp);
+                x++;
+                y++;
+                temp++;
+            }
+            index++;
+        }
+        return mat;
     }
 }
