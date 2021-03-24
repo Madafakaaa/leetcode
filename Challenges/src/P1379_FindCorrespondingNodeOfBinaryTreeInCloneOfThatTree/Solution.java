@@ -32,9 +32,7 @@ class Solution {
         }
         if (original.right != null) {
             TreeNode right = getTargetCopy(original.right, cloned.right, target);
-            if (right != null) {
-                return right;
-            }
+            return right;
         }
         return null;
     }
