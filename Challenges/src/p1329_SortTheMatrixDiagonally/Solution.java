@@ -1,4 +1,4 @@
-package Challenges.p1329_SortTheMatrixDiagonally;
+package p1329_SortTheMatrixDiagonally;
 
 import java.util.ArrayList;
 import java.util.Collections;
