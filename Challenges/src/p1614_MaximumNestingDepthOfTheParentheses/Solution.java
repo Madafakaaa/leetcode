@@ -36,11 +36,14 @@ package p1614_MaximumNestingDepthOfTheParentheses;
 class Solution {
     public int maxDepth(String s) {
         int res = 0;
-        int leftBracket = 0;
+        int depth = 0;
         for (char c : s.toCharArray()) {
             if (c == '(') {
-                leftBracket++;
+                depth++;
+            } else if (c == ')') {
+                depth--;
             }
+            res = Math.max(res, depth);
         }
         return res;
     }
