@@ -28,9 +28,6 @@ class Solution {
         for (String word : word2) {
             sb2.append(word);
         }
-        if (sb1.toString().equals(sb2.toString())) {
-            return true;
-        }
-        return false;
+        return sb1.toString().equals(sb2.toString());
     }
 }
