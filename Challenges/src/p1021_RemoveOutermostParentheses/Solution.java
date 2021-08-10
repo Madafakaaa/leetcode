@@ -27,7 +27,7 @@ class Solution {
             }
             temp.append(c);
             if (counter == 0 && temp.length() > 0) {
-                res.append(temp.toString().substring(1, temp.toString().length() - 1));
+                res.append(temp.toString(), 1, temp.toString().length() - 1);
                 temp = new StringBuilder();
             }
         }

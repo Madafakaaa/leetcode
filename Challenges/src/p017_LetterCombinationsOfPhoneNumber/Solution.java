@@ -4,9 +4,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent. Return the answer in any order.
+ * <p>
+ * A mapping of digit to letters (just like on the telephone buttons) is given below. Note that 1 does not map to any letters.
+ * <p>
+ * Example 1:
+ * <p>
+ * Input: digits = "23"
+ * Output: ["ad","ae","af","bd","be","bf","cd","ce","cf"]
+ * Example 2:
+ * <p>
+ * Input: digits = ""
+ * Output: []
+ * Example 3:
+ * <p>
+ * Input: digits = "2"
+ * Output: ["a","b","c"]
+ */
 class Solution {
 
     public List<String> letterCombinations(String digits) {
+        List<String> result = new ArrayList<>();
+        if (digits.length() == 0) {
+            return result;
+        }
         HashMap<Character, String> dict = new HashMap<>();
         dict.put('2', "abc");
         dict.put('3', "def");
@@ -16,17 +38,13 @@ class Solution {
         dict.put('7', "pqrs");
         dict.put('8', "tuv");
         dict.put('9', "wxyz");
-        List<String> result = new ArrayList<>();
-        if (digits.length() == 0) {
-            return result;
-        }
         result.add("");
         for (int i = 0; i < digits.length(); i++) {
             List<String> temp = new ArrayList<>();
-            for (int j = 0; j < result.size(); j++) {
-                for (int k = 0; k < dict.get(digits.charAt(i)).length(); k++) {
-                    StringBuffer sb = new StringBuffer(result.get(j));
-                    sb.append(dict.get(digits.charAt(i)).charAt(k));
+            for (String str : result) {
+                for (char c : dict.get(digits.charAt(i)).toCharArray()) {
+                    StringBuilder sb = new StringBuilder(str);
+                    sb.append(c);
                     temp.add(sb.toString());
                 }
             }

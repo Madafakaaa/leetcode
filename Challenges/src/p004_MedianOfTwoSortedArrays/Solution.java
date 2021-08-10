@@ -1,33 +1,47 @@
 package p004_MedianOfTwoSortedArrays;
 
-import java.util.ArrayList;
-
+/**
+ * Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.
+ * <p>
+ * The overall run time complexity should be O(log (m+n)).
+ * <p>
+ * Example 1:
+ * <p>
+ * Input: nums1 = [1,3], nums2 = [2]
+ * Output: 2.00000
+ * Explanation: merged array = [1,2,3] and median is 2.
+ * Example 2:
+ * <p>
+ * Input: nums1 = [1,2], nums2 = [3,4]
+ * Output: 2.50000
+ * Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.
+ */
 class Solution {
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        ArrayList<Double> nums = new ArrayList<Double>();
-        int index1 = 0, index2 = 0;
-        while (index1 < nums1.length && index2 < nums2.length) {
-            if (nums1[index1] < nums2[index2]) {
-                nums.add((double) nums1[index1]);
-                index1++;
+        int[] nums = new int[nums1.length + nums2.length];
+        int i1 = 0, i2 = 0;
+        while (i1 < nums1.length && i2 < nums2.length) {
+            if (nums1[i1] < nums2[i2]) {
+                nums[i1 + i2] = nums1[i1];
+                i1++;
             } else {
-                nums.add((double) nums2[index2]);
-                index2++;
+                nums[i1 + i2] = nums2[i2];
+                i2++;
             }
         }
-        while (index1 < nums1.length) {
-            nums.add((double) nums1[index1]);
-            index1++;
+        while (i1 < nums1.length) {
+            nums[i1 + i2] = nums1[i1];
+            i1++;
         }
-        while (index2 < nums2.length) {
-            nums.add((double) nums2[index2]);
-            index2++;
+        while (i2 < nums2.length) {
+            nums[i1 + i2] = nums2[i2];
+            i2++;
         }
-        if ((nums1.length + nums2.length) % 2 == 1) {
-            return nums.get((nums1.length + nums2.length - 1) / 2);
+        if (nums.length % 2 == 1) {
+            return nums[(nums.length - 1) / 2];
         } else {
-            return (nums.get((nums1.length + nums2.length) / 2 - 1) + nums.get((nums1.length + nums2.length) / 2)) / 2;
+            return (double) (nums[(nums.length - 1) / 2] + nums[nums.length / 2]) / 2;
         }
     }
 
