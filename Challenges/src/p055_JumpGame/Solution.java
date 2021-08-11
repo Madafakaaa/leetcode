@@ -19,18 +19,19 @@ class Solution {
     public boolean canJump(int[] nums) {
         if (nums.length == 1) return true;
         if (nums[0] == 0) return false;
-        int temp = 0;
-        while (temp + nums[temp] < nums.length) {
-            int maxJump = 0;
-            int nextIndex = 0;
-            for (int i = temp + 1; i <= temp + nums[temp]; i++) {
-                if (i + nums[i] > maxJump) {
-                    maxJump = i + nums[i];
+        if (nums[0] >= nums.length - 1) return true;
+        int currentIndex = 0, maxJump = nums[0], nextIndex = 0;
+        while (maxJump < nums.length - 1) {
+            for (int i = currentIndex + 1; i <= currentIndex + nums[currentIndex] && i < nums.length; i++) {
+                if (maxJump < i + nums[i]) {
                     nextIndex = i;
+                    maxJump = i + nums[i];
                 }
             }
-            if (maxJump == 0) return false;
-            temp = nextIndex;
+            if (nextIndex == currentIndex) {
+                return false;
+            }
+            currentIndex = nextIndex;
         }
         return true;
     }
