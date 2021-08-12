@@ -1,51 +1,51 @@
 package p148_SortList;
 
-class Solution {
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
+/**
+ * Given the head of a linked list, return the list after sorting it in ascending order.
+ * <p>
+ * Follow up: Can you sort the linked list in O(n logn) time and O(1) memory (i.e. constant space)?
+ * <p>
+ * Example 1:
+ * Input: head = [4,2,1,3]
+ * Output: [1,2,3,4]
+ * <p>
+ * Example 2:
+ * Input: head = [-1,5,3,4,0]
+ * Output: [-1,0,3,4,5]
+ * <p>
+ * Example 3:
+ * Input: head = []
+ * Output: []
+ */
+class Solution {
     public ListNode sortList(ListNode head) {
-        int length = 0;
-        ListNode temp = head;
-        while (temp != null) {
-            length++;
-            temp = temp.next;
-        }
-        if (length == 2) {
-            if (head.val > head.next.val) {
-                temp = head;
-                head = head.next;
-                head.next = temp;
-                head.next.next = null;
-            }
-        } else if (length > 2) {
-            temp = head;
-            for (int i = 0; i < length / 2 - 1; i++) {
-                temp = temp.next;
-            }
-            ListNode dummy = temp.next;
-            temp.next = null;
-            ListNode head1 = sortList(head);
-            ListNode head2 = sortList(dummy);
-            head = dummy;
-            while (head1 != null && head2 != null) {
-                if (head1.val < head2.val) {
-                    dummy.next = head1;
-                    head1 = head1.next;
+        PriorityQueue<ListNode> queue = new PriorityQueue<ListNode>(new Comparator<ListNode>() {
+            @Override
+            public int compare(ListNode l1, ListNode l2) {
+                if (l1.val > l2.val) {
+                    return 1;
+                } else if (l1.val < l2.val) {
+                    return -1;
                 } else {
-                    dummy.next = head2;
-                    head2 = head2.next;
+                    return 0;
                 }
             }
-            while (head1 != null) {
-                dummy.next = head1;
-                head1 = head1.next;
-            }
-            while (head2 != null) {
-                dummy.next = head2;
-                head2 = head2.next;
-            }
+        });
+        while (head != null) {
+            queue.add(head);
             head = head.next;
         }
-        return head;
+        ListNode dummy = new ListNode();
+        ListNode temp = dummy;
+        while (!queue.isEmpty()) {
+            ListNode node = queue.poll();
+            node.next = null;
+            temp.next = node;
+            temp = temp.next;
+        }
+        return dummy.next;
     }
-
 }
