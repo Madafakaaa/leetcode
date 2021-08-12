@@ -1,36 +1,35 @@
 package p108_ConvertSortedArrayToBinarySearchTree;
 
+import java.util.Arrays;
+
 /**
- * Definition for a binary tree node.
- * public class TreeNode {
- * int val;
- * TreeNode left;
- * TreeNode right;
- * TreeNode() {}
- * TreeNode(int val) { this.val = val; }
- * TreeNode(int val, TreeNode left, TreeNode right) {
- * this.val = val;
- * this.left = left;
- * this.right = right;
- * }
- * }
+ * Given an integer array nums where the elements are sorted in ascending order, convert it to a height-balanced binary search tree.
+ * <p>
+ * A height-balanced binary tree is a binary tree in which the depth of the two subtrees of every node never differs by more than one.
+ * <p>
+ * Example 1:
+ * Input: nums = [-10,-3,0,5,9]
+ * Output: [0,-3,9,-10,null,5]
+ * Explanation: [0,-10,5,null,-3,null,9] is also accepted:
+ * <p>
+ * Example 2:
+ * Input: nums = [1,3]
+ * Output: [3,1]
+ * Explanation: [1,3] and [3,1] are both a height-balanced BSTs.
  */
 class Solution {
 
-    public int[] nums;
-
     public TreeNode sortedArrayToBST(int[] nums) {
-        this.nums = nums;
-        return helper(0, nums.length - 1);
-    }
-
-    public TreeNode helper(int left, int right) {
-        if (left > right) return null;
-        int mid = left + (right - left) / 2;
-        TreeNode newNode = new TreeNode(nums[mid]);
-        newNode.left = helper(left, mid - 1);
-        newNode.right = helper(mid + 1, right);
-        return newNode;
+        if (nums.length == 0) {
+            return null;
+        } else if (nums.length == 1) {
+            return new TreeNode(nums[0], null, null);
+        } else {
+            int mid = nums.length / 2;
+            int[] leftNums = Arrays.copyOfRange(nums, 0, mid);
+            int[] rightNums = Arrays.copyOfRange(nums, mid + 1, nums.length);
+            return new TreeNode(nums[mid], sortedArrayToBST(leftNums), sortedArrayToBST(rightNums));
+        }
     }
 
 }
