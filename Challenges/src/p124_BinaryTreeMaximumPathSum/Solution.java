@@ -1,29 +1,42 @@
 package p124_BinaryTreeMaximumPathSum;
 
+/**
+ * A path in a binary tree is a sequence of nodes where each pair of adjacent nodes in the sequence has an edge connecting them.
+ * A node can only appear in the sequence at most once. Note that the path does not need to pass through the root.
+ * <p>
+ * The path sum of a path is the sum of the node's values in the path.
+ * <p>
+ * Given the root of a binary tree, return the maximum path sum of any path.
+ * <p>
+ * Example 1:
+ * Input: root = [1,2,3]
+ * Output: 6
+ * Explanation: The optimal path is 2 -> 1 -> 3 with a path sum of 2 + 1 + 3 = 6.
+ * <p>
+ * Example 2:
+ * Input: root = [-10,9,20,null,null,15,7]
+ * Output: 42
+ * Explanation: The optimal path is 15 -> 20 -> 7 with a path sum of 15 + 20 + 7 = 42.
+ */
 class Solution {
 
-    public int maxSum = Integer.MIN_VALUE;
+    Integer result;
 
     public int maxPathSum(TreeNode root) {
-        if (root != null) recur(root);
-        return maxSum;
+        this.result = Integer.MIN_VALUE;
+        getMaxPathSum(root);
+        return this.result;
     }
 
-    public int recur(TreeNode node) {
-        int res = node.val;
-        int leftVal = 0;
-        int rightVal = 0;
-        if (node.left != null) {
-            leftVal = recur(node.left);
-            if (leftVal > 0) res += leftVal;
+    public int getMaxPathSum(TreeNode root) {
+        if (root == null) {
+            return 0;
         }
-        if (node.right != null) {
-            rightVal = recur(node.right);
-            if (rightVal > 0) res += rightVal;
-        }
-        if (res > this.maxSum) maxSum = res;
-        // return res;
-        // for recursion : return the max gain if continue the same path?????
-        return node.val + Math.max(Math.max(leftVal, 0), Math.max(rightVal, 0));
+        int leftMax = getMaxPathSum(root.left);
+        int rightMax = getMaxPathSum(root.right);
+        int localMax = root.val + Math.max(0, leftMax) + Math.max(0, rightMax);
+        this.result = Math.max(localMax, this.result);
+        return root.val + Math.max(Math.max(leftMax, rightMax), 0);
     }
+
 }
