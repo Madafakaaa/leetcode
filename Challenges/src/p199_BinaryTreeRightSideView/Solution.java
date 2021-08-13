@@ -1,39 +1,44 @@
 package p199_BinaryTreeRightSideView;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Queue;
 
 /**
- * @description:
- * @author: ziyi3.zhang
- * @CreateDate: 2021/3/4 9:27
+ * Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+ * <p>
+ * Example 1:
+ * Input: root = [1,2,3,null,5,null,4]
+ * Output: [1,3,4]
+ * <p>
+ * Example 2:
+ * Input: root = [1,null,3]
+ * Output: [1,3]
+ * <p>
+ * Example 3:
+ * Input: root = []
+ * Output: []
  */
 class Solution {
 
+    ArrayList<Integer> list;
+
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> res = new LinkedList<>();
-        if (Objects.isNull(root)) {
-            return res;
+        list = new ArrayList<>();
+        levelOrder(root, 0);
+        return list;
+    }
+
+    public void levelOrder(TreeNode root, int depth) {
+        if (root == null) {
+            return;
         }
-        Queue<TreeNode> queue = new LinkedList<>();
-        queue.add(root);
-        TreeNode tempRight = null;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                tempRight = queue.poll();
-                if (Objects.nonNull(tempRight.left)) {
-                    queue.add(tempRight.left);
-                }
-                if (Objects.nonNull(tempRight.right)) {
-                    queue.add(tempRight.right);
-                }
-            }
-            res.add(tempRight.val);
+        if (list.size() > depth) {
+            list.set(depth, root.val);
+        } else {
+            list.add(root.val);
         }
-        return res;
+        levelOrder(root.left, depth + 1);
+        levelOrder(root.right, depth + 1);
     }
 
 }
