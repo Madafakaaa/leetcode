@@ -1,4 +1,4 @@
-package p238_ProductOfArrayExceptSelf.p239_SlidingWindowMaximum;
+package p239_SlidingWindowMaximum;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
