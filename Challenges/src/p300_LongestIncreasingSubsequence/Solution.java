@@ -1,17 +1,35 @@
 package p300_LongestIncreasingSubsequence;
 
+/**
+ * Given an integer array nums, return the length of the longest strictly increasing subsequence.
+ * <p>
+ * A subsequence is a sequence that can be derived from an array by deleting some or no elements without changing the order of the remaining elements. For example, [3,6,2,7] is a subsequence of the array [0,3,1,6,2,2,7].
+ * <p>
+ * Example 1:
+ * Input: nums = [10,9,2,5,3,7,101,18]
+ * Output: 4
+ * Explanation: The longest increasing subsequence is [2,3,7,101], therefore the length is 4.
+ * Example 2:
+ * Input: nums = [0,1,0,3,2,3]
+ * Output: 4
+ * Example 3:
+ * Input: nums = [7,7,7,7,7,7,7]
+ * Output: 1
+ */
 class Solution {
 
     public int lengthOfLIS(int[] nums) {
-        if (nums.length == 0) return 0;
-        int[] count = new int[nums.length];
-        count[0] = 1;
-        int res = 0, temp;
-        for (int i = 1; i < nums.length - 1; i++) {
-            temp = 0;
-            for (int j = 0; j < i; j++) if (nums[j] < nums[i]) temp = Math.max(temp, count[j]);
-            count[i] = temp + 1;
-            res = Math.max(res, count[i]);
+        int res = 1;
+        int[] dp = new int[nums.length];
+        dp[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            dp[i] = 1;
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
         }
         return res;
     }

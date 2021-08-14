@@ -1,29 +1,44 @@
 package p338_CountingBits;
 
-import java.util.ArrayList;
-
+/**
+ * Given an integer n, return an array ans of length n + 1 such that for each i (0 <= i <= n), ans[i] is the number of 1's in the binary representation of i.
+ * <p>
+ * Example 1:
+ * Input: n = 2
+ * Output: [0,1,1]
+ * Explanation:
+ * 0 --> 0
+ * 1 --> 1
+ * 2 --> 10
+ * <p>
+ * Example 2:
+ * Input: n = 5
+ * Output: [0,1,1,2,1,2]
+ * Explanation:
+ * 0 --> 0
+ * 1 --> 1
+ * 2 --> 10
+ * 3 --> 11
+ * 4 --> 100
+ * 5 --> 101
+ */
 class Solution {
-    public int[] countBits(int num) {
-        int[] res = new int[num + 1];
-        if (num == 0) return res;
-        int max = 1, temp, tempRes, tempMax;
-        ArrayList<Integer> mem = new ArrayList<>(num);
-        for (int i = 1; i < num + 1; i++) {
-            if (i == max) {
-                res[i] = 1;
-                mem.add(i);
-                max *= 2;
-            } else {
-                tempRes = 0;
-                temp = i;
-                for (int j = mem.size() - 1; j >= 0 && temp > 0; j--) {
-                    tempMax = mem.get(j);
-                    if (temp >= tempMax) {
-                        tempRes++;
-                        temp -= tempMax;
-                    }
-                }
-                res[i] = tempRes;
+    public int[] countBits(int n) {
+        if (n == 0) {
+            return new int[]{0};
+        }
+        if (n == 1) {
+            return new int[]{0, 1};
+        }
+        int[] res = new int[n + 1];
+        res[0] = 0;
+        res[1] = 1;
+        int i = 2;
+        while (i <= n) {
+            int tempI = i;
+            while (i <= n && i < 2 * tempI) {
+                res[i] = res[i - tempI] + 1;
+                i++;
             }
         }
         return res;

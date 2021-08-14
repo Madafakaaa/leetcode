@@ -1,5 +1,5 @@
+2020.12
 29. Divide Two Integers
-31. Next Permutation
 37. Sudoku Solver
 117. Populating Next Right Pointers in Each Node II
 207. Course Schedule
@@ -10,3 +10,22 @@
 431. Encode N-ary Tree to Binary Tree
 647. Palindromic Substrings
 658. Find K Closest Elements
+
+2021.08
+42. Trapping Rain Water
+45. Jump Game II
+56. Merge Intervals
+72. Edit Distance
+76. Minimum Window Substring
+84. Largest Rectangle in Histogram
+96. Unique Binary Search Trees
+101. Symmetric Tree
+146. LRU Cache
+207. Course Schedule
+208. Implement Trie (Prefix Tree)
+239. Sliding Window Maximum
+279. Perfect Squares
+295. Find Median from Data Stream
+337. House Robber III
+
+
