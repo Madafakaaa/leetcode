@@ -27,5 +27,7 @@
 279. Perfect Squares
 295. Find Median from Data Stream
 337. House Robber III
+416. Partition Equal Subset Sum
+437. Path Sum III
 
 
