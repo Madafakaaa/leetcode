@@ -2,19 +2,21 @@ package p543_DiameterOfBinaryTree;
 
 class Solution {
 
-    public int res = 0;
+    int res;
 
     public int diameterOfBinaryTree(TreeNode root) {
-        calculateMaxDepth(root);
+        this.res = 0;
+        process(root);
         return res;
     }
 
-    public int calculateMaxDepth(TreeNode node) {
-        if (node == null) return 0;
-        int leftDepth = calculateMaxDepth(node.left);
-        int rightDepth = calculateMaxDepth(node.right);
-        res = Math.max(res, leftDepth + rightDepth);
-        return Math.max(leftDepth + 1, rightDepth + 1);
+    public int process(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = process(root.left);
+        int right = process(root.right);
+        res = Math.max(left + right + 1, res);
+        return Math.max(left, right) + 1;
     }
-
 }

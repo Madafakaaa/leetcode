@@ -1,24 +1,35 @@
 package p617_MergeTwoBinaryTrees;
 
+/**
+ * You are given two binary trees root1 and root2.
+ * <p>
+ * Imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not. You need to merge the two trees into a new binary tree. The merge rule is that if two nodes overlap, then sum node values up as the new value of the merged node. Otherwise, the NOT null node will be used as the node of the new tree.
+ * <p>
+ * Return the merged tree.
+ * <p>
+ * Note: The merging process must start from the root nodes of both trees.
+ * <p>
+ * Example 1:
+ * Input: root1 = [1,3,2,5], root2 = [2,1,3,null,4,null,7]
+ * Output: [3,4,5,5,4,null,7]
+ * <p>
+ * Example 2:
+ * Input: root1 = [1], root2 = [1,2]
+ * Output: [2,2]
+ */
 class Solution {
 
     public TreeNode mergeTrees(TreeNode t1, TreeNode t2) {
         if (t1 == null && t2 == null) return null;
-        int val1 = 0, val2 = 0;
-        TreeNode left1 = null, left2 = null, right1 = null, right2 = null;
-        if (t1 != null) {
-            val1 = t1.val;
-            left1 = t1.left;
-            right1 = t1.right;
+        if (t1 == null) {
+            return t2;
         }
-        if (t2 != null) {
-            val2 = t2.val;
-            left2 = t2.left;
-            right2 = t2.right;
+        if (t2 == null) {
+            return t1;
         }
-        TreeNode res = new TreeNode(val1 + val2);
-        res.left = mergeTrees(left1, left2);
-        res.right = mergeTrees(right1, right2);
+        TreeNode res = new TreeNode(t1.val + t2.val);
+        res.left = mergeTrees(t1.left, t2.left);
+        res.right = mergeTrees(t1.right, t2.right);
         return res;
     }
 
