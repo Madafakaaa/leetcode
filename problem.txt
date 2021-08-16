@@ -30,5 +30,6 @@
 416. Partition Equal Subset Sum
 437. Path Sum III
 621. Task Scheduler
+763. Partition Labels
 
 
