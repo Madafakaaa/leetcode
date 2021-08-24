@@ -11,7 +11,7 @@
 647. Palindromic Substrings
 658. Find K Closest Elements
 
-2021.08 Top 100 Liked
+Top 100 Liked
 42. Trapping Rain Water
 45. Jump Game II
 56. Merge Intervals
@@ -32,11 +32,17 @@
 621. Task Scheduler
 763. Partition Labels
 
-2021.08 Top Interviewed
+Top Interviewed
 131. Palindrome Partitioning
 149. Max Points on a Line
 163. Missing Ranges
 190. Reverse Bits
 227. Basic Calculator II
+
+Top Microsoft Questions
+224. Basic Calculator
+273. Integer to English Words
+460. LFU Cache
+
 
 
