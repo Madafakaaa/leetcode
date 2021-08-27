@@ -17,30 +17,33 @@ package p273_IntegerToEnglishWords;
  * Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
  */
 class Solution {
-    String[] lessThanTwenty = new String[]{"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
-    String[] lessThanHundred = new String[]{"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
+    String[] lessThanTwenty = new String[]{"Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven",
+            "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen",
+            "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+
+    String[] lessThanHundred = new String[]{"Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+
 
     public String numberToWords(int num) {
-        if (num < 0) return "";
-        if (num == 0) return "Zero";
-        return helper(num);
+        String res = helper(num);
+        res = res.replaceAll("  ", " ");
+        return res.trim();
     }
 
-    private String helper(int num) {
-        StringBuilder sb = new StringBuilder();
+    public String helper(int num) {
         if (num < 20) {
-            sb.append(lessThanTwenty[num]);
+            return lessThanTwenty[num];
         } else if (num < 100) {
-            sb.append(lessThanHundred[num / 10]).append(" ").append(lessThanTwenty[num % 10]);
-        } else if (num < 1000) {
-            sb.append(helper(num / 100)).append(" Hundred ").append(helper(num % 100));
-        } else if (num < 1000000) {
-            sb.append(helper(num / 1000)).append(" Thousand ").append(helper(num % 1000));
-        } else if (num < 1000000000) {
-            sb.append(helper(num / 1000000)).append(" Million ").append(helper(num % 1000000));
+            return lessThanHundred[num / 10 - 2] + ((num % 10 == 0) ? "" : " " + lessThanTwenty[num % 10]);
+        } else if (num < 1_000) {
+            return helper(num / 100) + " Hundred " + ((num % 100 == 0) ? "" : helper(num % 100));
+        } else if (num < 1_000_000) {
+            return helper(num / 1_000) + " Thousand " + ((num % 1_000 == 0) ? "" : helper(num % 1_000));
+        } else if (num < 1_000_000_000) {
+            return helper(num / 1_000_000) + " Million " + ((num % 1_000_000 == 0) ? "" : helper(num % 1_000_000));
         } else {
-            sb.append(helper(num / 1000000000)).append(" Billion ").append(helper(num % 1000000000));
+            return helper(num / 1_000_000_000) + " Billion " + ((num % 1_000_000_000 == 0) ? "" : helper(num % 1_000_000_000));
         }
-        return sb.toString().trim();
     }
 }

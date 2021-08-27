@@ -21,21 +21,14 @@ class Solution {
             starts[i] = intervals[i][0];
             ends[i] = intervals[i][1];
         }
-        /**
-         0, 5, 15
-         10, 20, 30
-         **/
         Arrays.sort(starts);
         Arrays.sort(ends);
-        int endI = 0;
-        int rooms = 0;
-        for (int startI = 0; startI < intervals.length; startI++) {
-            if (starts[startI] < ends[endI]) {
-                rooms++;
-            } else {
-                endI++;
+        int share = 0;
+        for (int i = 0; i < intervals.length; i++) {
+            if (starts[i] >= ends[share]) {
+                share++;
             }
         }
-        return rooms;
+        return intervals.length - share;
     }
 }

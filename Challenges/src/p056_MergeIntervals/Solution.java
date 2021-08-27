@@ -1,7 +1,6 @@
 package p056_MergeIntervals;
 
 import java.util.Arrays;
-import java.util.LinkedList;
 
 /**
  * Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
@@ -19,19 +18,19 @@ import java.util.LinkedList;
 class Solution {
     public int[][] merge(int[][] intervals) {
         Arrays.sort(intervals, (a, b) -> Integer.compare(a[0], b[0]));
-        LinkedList<int[]> merged = new LinkedList<>();
-        for (int[] interval : intervals) {
-            // if the list of merged intervals is empty or if the current
-            // interval does not overlap with the previous, simply append it.
-            if (merged.isEmpty() || merged.getLast()[1] < interval[0]) {
-                merged.add(interval);
+        int count = 0;
+        for (int i = 1; i < intervals.length; i++) {
+            // create new interval
+            if (intervals[i][0] > intervals[count][1]) {
+                count++;
+                intervals[count][0] = intervals[i][0];
+                intervals[count][1] = intervals[i][1];
             }
-            // otherwise, there is overlap, so we merge the current and previous
-            // intervals.
-            else {
-                merged.getLast()[1] = Math.max(merged.getLast()[1], interval[1]);
+            // merge
+            if (intervals[i][0] <= intervals[count][1] && intervals[i][1] > intervals[count][1]) {
+                intervals[count][1] = intervals[i][1];
             }
         }
-        return merged.toArray(new int[merged.size()][]);
+        return Arrays.copyOfRange(intervals, 0, count + 1);
     }
 }

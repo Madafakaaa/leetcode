@@ -26,35 +26,35 @@ package p200_NumberOfIslands;
 class Solution {
 
     int res;
-    char[][] map;
+    int height;
+    int width;
+    char[][] grid;
 
     public int numIslands(char[][] grid) {
-        int height = grid.length;
-        int width = grid[0].length;
-        this.res = 0;
-        this.map = grid;
+        res = 0;
+        this.grid = grid;
+        this.height = grid.length;
+        this.width = grid[0].length;
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 if (grid[i][j] == '1') {
-                    this.res++;
-                    clear(i, j);
+                    res++;
+                    dfs(i, j);
                 }
             }
         }
         return res;
     }
 
-    public void clear(int i, int j) {
-        if (i < 0 || j < 0 || i >= this.map.length || j >= this.map[0].length) {
+    public void dfs(int i, int j) {
+        if (i < 0 || j < 0 || i >= height || j >= width || grid[i][j] == '0') {
             return;
         }
-        if (this.map[i][j] == '1') {
-            this.map[i][j] = '0';
-            clear(i + 1, j);
-            clear(i - 1, j);
-            clear(i, j + 1);
-            clear(i, j - 1);
-        }
+        grid[i][j] = '0';
+        dfs(i + 1, j);
+        dfs(i - 1, j);
+        dfs(i, j + 1);
+        dfs(i, j - 1);
     }
 
 }
