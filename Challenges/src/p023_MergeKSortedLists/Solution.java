@@ -1,5 +1,7 @@
 package p023_MergeKSortedLists;
 
+import java.util.PriorityQueue;
+
 /**
  * You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
  * <p>
@@ -28,6 +30,8 @@ package p023_MergeKSortedLists;
  */
 public class Solution {
 
+    PriorityQueue<ListNode> heap;
+
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists == null || lists.length == 0) {
             return null;
@@ -35,30 +39,20 @@ public class Solution {
         if (lists.length == 1) {
             return lists[0];
         }
-        for (int i = 0; i < lists.length - 1; i++) {
-            lists[i + 1] = mergeTwoLists(lists[i], lists[i + 1]);
-        }
-        return lists[lists.length - 1];
-    }
-
-    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        ListNode dummy = new ListNode(0, null);
-        ListNode temp = dummy;
-        while (l1 != null && l2 != null) {
-            if (l1.val <= l2.val) {
-                temp.next = l1;
-                l1 = l1.next;
-            } else {
-                temp.next = l2;
-                l2 = l2.next;
+        heap = new PriorityQueue<>((a, b) -> a.val - b.val);
+        for (ListNode node : lists) {
+            while (node != null) {
+                heap.add(node);
+                node = node.next;
             }
+        }
+        ListNode dummy = new ListNode();
+        ListNode temp = dummy;
+        while (!heap.isEmpty()) {
+            temp.next = heap.poll();
             temp = temp.next;
         }
-        if (l1 != null) {
-            temp.next = l1;
-        } else {
-            temp.next = l2;
-        }
+        temp.next = null;
         return dummy.next;
     }
 }

@@ -18,24 +18,23 @@ import java.util.Stack;
  * Output: 23
  */
 class Solution {
+
     public int calculate(String s) {
         if (s == null) return 0;
         int result = 0, sign = 1, currentNum = 0;
-        Stack<Integer> stack = new Stack<Integer>();
-        stack.push(sign);
-
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            if (Character.isDigit(ch)) {
-                currentNum = currentNum * 10 + (ch - '0');
-            } else if (ch == '+' || ch == '-') {
+        Stack<Integer> signStack = new Stack<>();
+        signStack.add(sign);
+        for (char c : s.toCharArray()) {
+            if (Character.isDigit(c)) {
+                currentNum = 10 * currentNum + c - '0';
+            } else if (c == '+' || c == '-') {
                 result += sign * currentNum;
-                sign = stack.peek() * (ch == '+' ? 1 : -1);
+                sign = (c == '+' ? 1 : -1) * signStack.peek();
                 currentNum = 0;
-            } else if (ch == '(') {
-                stack.push(sign);
-            } else if (ch == ')') {
-                stack.pop();
+            } else if (c == '(') {
+                signStack.push(sign);
+            } else if (c == ')') {
+                signStack.pop();
             }
         }
         result += sign * currentNum;
