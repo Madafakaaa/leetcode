@@ -16,22 +16,22 @@ package p1448_CountGoodNodesInBinaryTree;
  */
 class Solution {
 
-    public int result = 0;
+    int res = 0;
 
     public int goodNodes(TreeNode root) {
-        goodNodes(root, Integer.MIN_VALUE);
-        return result;
+        dfs(root, Integer.MIN_VALUE);
+        return res;
     }
 
-    public void goodNodes(TreeNode root, int max) {
+    public void dfs(TreeNode root, int prevMax) {
         if (root == null) {
             return;
         }
-        if (root.val <= max) {
-            result++;
-            max = Math.max(max, root.val);
+        if (root.val >= prevMax) {
+            res++;
         }
-        goodNodes(root.left, max);
-        goodNodes(root.right, max);
+        prevMax = Math.max(prevMax, root.val);
+        dfs(root.left, prevMax);
+        dfs(root.right, prevMax);
     }
 }

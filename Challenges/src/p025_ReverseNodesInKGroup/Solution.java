@@ -1,6 +1,6 @@
 package p025_ReverseNodesInKGroup;
 
-import java.util.Stack;
+import java.util.ArrayList;
 
 /**
  * Definition for singly-linked list.
@@ -15,25 +15,67 @@ import java.util.Stack;
 class Solution {
 
     public ListNode reverseKGroup(ListNode head, int k) {
-        ListNode dummy = new ListNode(0, head);
-        ListNode temp = dummy;
-        Stack<ListNode> s = new Stack<>();
-        while (true) {
-            ListNode itr = temp;
-            for (int i = 0; i < k; i++) {
-                if (itr.next == null) return dummy.next;
-                itr = itr.next;
-                s.push(itr);
-            }
-            ListNode end = itr.next;
-            itr = temp;
-            while (!s.empty()) {
-                itr.next = s.pop();
-                itr = itr.next;
-            }
-            itr.next = end;
-            temp = itr;
+        if (k <= 1) {
+            return head;
         }
+        ArrayList<ListNode> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head);
+            head = head.next;
+        }
+        ListNode dummy = new ListNode();
+        ListNode temp = dummy;
+        for (int i = 0; i < list.size() / k; i++) {
+            for (int j = i * k + k - 1; j >= i * k; j--) {
+                temp.next = list.get(j);
+                temp = temp.next;
+            }
+        }
+        for (int i = (list.size() / k) * k; i < list.size(); i++) {
+            temp.next = list.get(i);
+            temp = temp.next;
+        }
+        temp.next = null;
+        return dummy.next;
     }
 
 }
+
+/**
+ * class Solution {
+ * public ListNode reverseKGroup(ListNode head, int k) {
+ * if(head==null || head.next==null) return head;
+ * <p>
+ * ListNode prev=null;
+ * ListNode curr=head;
+ * ListNode next=null;
+ * <p>
+ * int h=0;
+ * while(curr!=null){
+ * h++;
+ * curr=curr.next;
+ * if(h>=k)
+ * break;
+ * }
+ * curr=head;
+ * if(h<k)
+ * return head;
+ * <p>
+ * int i=k;
+ * while(curr!=null && i>=1){
+ * next=curr.next;
+ * curr.next=prev;
+ * prev=curr;
+ * curr=next;
+ * <p>
+ * i--;
+ * }
+ * <p>
+ * if(curr!=null){
+ * head.next=reverseKGroup(curr,k);
+ * }
+ * <p>
+ * return prev;
+ * }
+ * }
+ */

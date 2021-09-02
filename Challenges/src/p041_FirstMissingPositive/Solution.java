@@ -19,15 +19,15 @@ package p041_FirstMissingPositive;
  */
 class Solution {
     public int firstMissingPositive(int[] nums) {
-        boolean[] b = new boolean[nums.length + 1];
+        boolean[] exist = new boolean[nums.length];
         for (int num : nums) {
-            if (num >= 0 && num < b.length) {
-                b[num] = true;
+            if (num > 0 && num <= nums.length) {
+                exist[num - 1] = true;
             }
         }
-        for (int i = 1; i < b.length; i++) {
-            if (b[i] == false) {
-                return i;
+        for (int i = 0; i < nums.length; i++) {
+            if (!exist[i]) {
+                return i + 1;
             }
         }
         return nums.length + 1;

@@ -1,5 +1,8 @@
 package p443_StringCompression;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Given an array of characters chars, compress it using the following algorithm:
  * <p>
@@ -32,33 +35,39 @@ package p443_StringCompression;
  */
 class Solution {
     public int compress(char[] chars) {
-        if (chars.length == 0) {
-            return 0;
-        }
-        char tempChar = chars[0];
-        int count = 1;
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 1; i < chars.length; i++) {
-            if (chars[i] == tempChar) {
-                count++;
-            } else {
-                stringBuilder.append(tempChar);
-                if (count > 1) {
-                    stringBuilder.append(count);
+        char temp = ' ';
+        int count = 0;
+        List<Character> charList = new ArrayList<>();
+        List<Integer> countList = new ArrayList<>();
+        for (char c : chars) {
+            if (c != temp) {
+                if (count != 0) {
+                    charList.add(temp);
+                    countList.add(count);
                 }
+                temp = c;
                 count = 1;
-                tempChar = chars[i];
+            } else {
+                count++;
             }
         }
-        stringBuilder.append(tempChar);
-        if (count > 1) {
-            stringBuilder.append(count);
+        if (count != 0) {
+            charList.add(temp);
+            countList.add(count);
         }
-        stringBuilder.append(count);
-        String res = stringBuilder.toString();
-        for (int i = 0; i < res.length(); i++) {
-            chars[i] = res.charAt(i);
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < charList.size(); i++) {
+            sb.append(charList.get(i));
+            if (countList.get(i) != 1) {
+                sb.append(countList.get(i));
+            }
         }
-        return stringBuilder.toString().length();
+        String resStr = sb.toString();
+        int res = resStr.length();
+        for (int i = 0; i < res; i++) {
+            chars[i] = resStr.charAt(i);
+        }
+        return sb.toString().length();
     }
+
 }

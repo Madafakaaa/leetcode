@@ -22,35 +22,47 @@ import java.util.Stack;
  * Output: 5
  */
 class Solution {
+
+    Stack<Integer> stack;
+    char operation;
+    Integer tempValue;
+
     public int calculate(String s) {
-        if (s == null || s.isEmpty()) return 0;
-        int len = s.length();
-        Stack<Integer> stack = new Stack<Integer>();
-        int currentNumber = 0;
-        char operation = '+';
-        for (int i = 0; i < len; i++) {
-            char currentChar = s.charAt(i);
-            if (Character.isDigit(currentChar)) {
-                currentNumber = (currentNumber * 10) + (currentChar - '0');
+        if (s.isEmpty()) {
+            return 0;
+        }
+        stack = new Stack<>();
+        operation = '+';
+        tempValue = 0;
+        for (char c : s.toCharArray()) {
+            if (c == ' ') {
+                continue;
             }
-            if (!Character.isDigit(currentChar) && !Character.isWhitespace(currentChar) || i == len - 1) {
-                if (operation == '-') {
-                    stack.push(-currentNumber);
-                } else if (operation == '+') {
-                    stack.push(currentNumber);
-                } else if (operation == '*') {
-                    stack.push(stack.pop() * currentNumber);
-                } else if (operation == '/') {
-                    stack.push(stack.pop() / currentNumber);
-                }
-                operation = currentChar;
-                currentNumber = 0;
+            if (Character.isDigit(c)) {
+                tempValue = tempValue * 10 + c - '0';
+            } else {
+                update();
+                operation = c;
+                tempValue = 0;
             }
         }
-        int result = 0;
+        update();
+        int res = 0;
         while (!stack.isEmpty()) {
-            result += stack.pop();
+            res += stack.pop();
         }
-        return result;
+        return res;
+    }
+
+    public void update() {
+        if (operation == '+') {
+            stack.add(tempValue);
+        } else if (operation == '-') {
+            stack.add(-tempValue);
+        } else if (operation == '*') {
+            stack.add(stack.pop() * tempValue);
+        } else {
+            stack.add(stack.pop() / tempValue);
+        }
     }
 }

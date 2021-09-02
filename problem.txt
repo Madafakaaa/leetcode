@@ -42,7 +42,11 @@ Top Interviewed
 Top Microsoft Questions
 224. Basic Calculator
 273. Integer to English Words
+297. Serialize and Deserialize Binary Tree
+340. Longest Substring with At Most K Distinct Characters
 460. LFU Cache
+642. Design Search Autocomplete System
+716. Max Stack
 
 
 
