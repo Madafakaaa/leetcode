@@ -47,6 +47,8 @@ Top Microsoft Questions
 460. LFU Cache
 642. Design Search Autocomplete System
 716. Max Stack
+1312. Minimum Insertion Steps to Make a String Palindrome
+1615. Maximal Network Rank
 
 
 
