@@ -1,6 +1,6 @@
 package p207_CourseSchedule;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
@@ -23,52 +23,62 @@ import java.util.ArrayList;
 class Solution {
 
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        // build a directed graph.
-        // If any loop happens, then we cannot finish the courses. Using dfs to find loop in the graph.
-        // 1. corner case: no prerequisites
-        if (prerequisites.length == 0) {
-            return true;
+        int[] inDegree = new int[numCourses];
+        HashMap<Integer, List<Integer>> postRequisites = new HashMap<>();
+        for (int[] prerequisite : prerequisites) {
+            inDegree[prerequisite[0]]++;
+            List<Integer> postRequisite = postRequisites.getOrDefault(prerequisite[1], new ArrayList<Integer>());
+            postRequisite.add(prerequisite[0]);
+            postRequisites.put(prerequisite[1], postRequisite);
         }
-        // 2. build graph. Index indicates current course,
-        ArrayList<Integer>[] graph = new ArrayList[numCourses];
-        // initial the graph
-        for (int i = 0; i < numCourses; i++) {
-            ArrayList<Integer> prereq = new ArrayList();
-            graph[i] = prereq;
-        }
-        // fill the graph with values
-        for (int i = 0; i < prerequisites.length; i++) {
-            int[] cur = prerequisites[i];
-            graph[cur[0]].add(cur[1]);
-        }
-        // 3. create visited to record current process.
-        // If not yet visit, it is 0. Visiting (looking for loops) - 1. Visited and no loops - 2;
-        int[] visited = new int[numCourses];
-        // for loop to find
-        for (int i = 0; i < numCourses; i++) {
-            if (visited[i] == 0 && !dfsCanFinish(i, visited, graph)) {
-                return false;
+        Queue<Integer> queue = new LinkedList<>();
+        ArrayList<Integer> res = new ArrayList<>();
+        boolean hasNewCourse = true;
+        while (hasNewCourse) {
+            hasNewCourse = false;
+            for (int i = 0; i < numCourses; i++) {
+                if (inDegree[i] == -1) {
+                    continue;
+                }
+                if (inDegree[i] == 0) {
+                    queue.add(i);
+                    inDegree[i] = -1;
+                    hasNewCourse = true;
+                }
+            }
+            while (!queue.isEmpty()) {
+                int finishedCourse = queue.poll();
+                res.add(finishedCourse);
+                List<Integer> postRequisite = postRequisites.getOrDefault(finishedCourse, new ArrayList<Integer>());
+                for (Integer post : postRequisite) {
+                    inDegree[post]--;
+                }
             }
         }
-        return true;
-    }
-
-    boolean dfsCanFinish(int cur, int[] visited, ArrayList[] graph) {
-        if (visited[cur] == 2) {
-            return true;
-        }
-        if (visited[cur] == 1) {
-            // loop happens
-            return false;
-        }
-        visited[cur] = 1;
-        ArrayList<Integer> prereqs = graph[cur];
-        for (int i = 0; i < prereqs.size(); i++) {
-            if (!dfsCanFinish(prereqs.get(i), visited, graph)) {
-                return false;
-            }
-        }
-        visited[cur] = 2;
-        return true;
+        return res.size() == numCourses;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

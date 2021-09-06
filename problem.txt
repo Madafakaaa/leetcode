@@ -1,4 +1,4 @@
-2020.12
+2021
 29. Divide Two Integers
 37. Sudoku Solver
 117. Populating Next Right Pointers in Each Node II
@@ -10,8 +10,6 @@
 431. Encode N-ary Tree to Binary Tree
 647. Palindromic Substrings
 658. Find K Closest Elements
-
-Top 100 Liked
 42. Trapping Rain Water
 45. Jump Game II
 56. Merge Intervals
@@ -31,15 +29,12 @@ Top 100 Liked
 437. Path Sum III
 621. Task Scheduler
 763. Partition Labels
-
-Top Interviewed
 131. Palindrome Partitioning
 149. Max Points on a Line
 163. Missing Ranges
 190. Reverse Bits
 227. Basic Calculator II
-
-Top Microsoft Questions
+218. The Skyline Problem
 224. Basic Calculator
 273. Integer to English Words
 297. Serialize and Deserialize Binary Tree
@@ -49,6 +44,6 @@ Top Microsoft Questions
 716. Max Stack
 1312. Minimum Insertion Steps to Make a String Palindrome
 1615. Maximal Network Rank
-
+1703. Minimum Adjacent Swaps for K Consecutive Ones
 
 
