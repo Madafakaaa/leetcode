@@ -1,3 +1,5 @@
+package Javase.src;
+
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -21,5 +23,8 @@ public class TestCollection {
         // Synchronized collections
         ConcurrentMap cm = new ConcurrentHashMap();
         ConcurrentHashMap chm = new ConcurrentHashMap();
+        StringBuilder sb = new StringBuilder();
+        sb.toString();
+        StringBuffer sf = new StringBuffer();
     }
 }
