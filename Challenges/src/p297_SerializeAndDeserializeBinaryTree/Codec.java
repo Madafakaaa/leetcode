@@ -24,6 +24,9 @@ package p297_SerializeAndDeserializeBinaryTree;
  * Output: [1,2]
  */
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -35,41 +38,58 @@ package p297_SerializeAndDeserializeBinaryTree;
  */
 public class Codec {
 
-    // Decodes your encoded data to tree.
-    int index = 0;
-
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
+        if (root == null) {
+            return "";
+        }
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
         StringBuilder sb = new StringBuilder();
-        solve(root, sb);
+        while (!queue.isEmpty()) {
+            TreeNode temp = queue.poll();
+            if (temp == null) {
+                sb.append('#');
+            } else {
+                queue.add(temp.left);
+                queue.add(temp.right);
+                sb.append(temp.val);
+            }
+            sb.append(',');
+        }
         return sb.toString();
     }
 
-    public void solve(TreeNode root, StringBuilder sb) {
-        if (root == null) {
-            sb.append("null,");
-            return;
-        }
-        sb.append(root.val);
-        sb.append(",");
-        solve(root.left, sb);
-        solve(root.right, sb);
-    }
-
+    // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-        String[] arr = data.split(",");
-        return solve2(arr);
-    }
-
-    public TreeNode solve2(String[] arr) {
-        if (index >= arr.length || arr[index].equals("null")) {
-            index++;
+        if (data.isEmpty()) {
             return null;
         }
-        TreeNode root = new TreeNode(Integer.parseInt(arr[index++]));
-        root.left = solve2(arr);
-        root.right = solve2(arr);
-        return root;
+        Queue<TreeNode> nodes = new LinkedList<>();
+        String[] strs = data.split(",");
+        for (String str : strs) {
+            if (str.equals("#")) {
+                nodes.add(null);
+            } else {
+                nodes.add(new TreeNode(Integer.parseInt(str)));
+            }
+        }
+        TreeNode res = nodes.poll();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(res);
+        while (!queue.isEmpty()) {
+            TreeNode temp = queue.poll();
+            if (temp == null) {
+                continue;
+            }
+            TreeNode left = nodes.poll();
+            TreeNode right = nodes.poll();
+            temp.left = left;
+            temp.right = right;
+            queue.add(left);
+            queue.add(right);
+        }
+        return res;
     }
 }
 

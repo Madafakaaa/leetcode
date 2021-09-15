@@ -34,162 +34,78 @@ import java.util.Stack;
  */
 class MaxStack {
 
-    private Stack<Integer> all;
-    private Stack<Integer> maxIndex;
+    private Stack<Integer> stack;
+    private Stack<Integer> maxStack;
+    private Stack<Integer> buffer;
 
     /**
      * initialize your data structure here.
      */
     public MaxStack() {
-        all = new Stack<Integer>();
-        maxIndex = new Stack<Integer>();
+        stack = new Stack<Integer>();
+        maxStack = new Stack<Integer>();
+        buffer = new Stack<Integer>();
     }
 
     public void push(int x) {
-        if (all.isEmpty() || all.get(maxIndex.peek()) <= x) {
-            maxIndex.push(all.size());
+        stack.push(x);
+        if (maxStack.isEmpty() || x >= maxStack.peek()) {
+            maxStack.push(x);
         }
-        all.push(x);
     }
 
     public int pop() {
-        if (maxIndex.peek() == all.size() - 1) {
-            maxIndex.pop();
+        Integer res = stack.pop();
+        if (res.equals(maxStack.peek())) {
+            maxStack.pop();
         }
-        return all.pop();
+        return res;
     }
 
     public int top() {
-        return all.peek();
+        return stack.peek();
     }
 
     public int peekMax() {
-        return all.get(maxIndex.peek());
+        return maxStack.peek();
     }
 
     public int popMax() {
-        int index = maxIndex.pop();
-        int res = all.remove(index);
-        for (int i = index; i < all.size(); i++) {
-            if (maxIndex.isEmpty() || all.get(maxIndex.peek()) <= all.get(i)) {
-                maxIndex.push(i);
+        Integer res = maxStack.pop();
+        while (!stack.peek().equals(res)) {
+            buffer.push(stack.pop());
+        }
+        stack.pop();
+        while (!buffer.isEmpty()) {
+            int x =buffer.pop();
+            if (maxStack.isEmpty() || x >= maxStack.peek()) {
+                maxStack.push(x);
             }
+            stack.push(x);
         }
         return res;
     }
 }
 
-/**
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- * <p>
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- */
-/**
- * Your MaxStack object will be instantiated and called as such:
- * MaxStack obj = new MaxStack();
- * obj.push(x);
- * int param_2 = obj.pop();
- * int param_3 = obj.top();
- * int param_4 = obj.peekMax();
- * int param_5 = obj.popMax();
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
