@@ -77,7 +77,7 @@ class MaxStack {
         }
         stack.pop();
         while (!buffer.isEmpty()) {
-            int x =buffer.pop();
+            int x = buffer.pop();
             if (maxStack.isEmpty() || x >= maxStack.peek()) {
                 maxStack.push(x);
             }

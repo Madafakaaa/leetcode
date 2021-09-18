@@ -39,7 +39,7 @@ class Solution {
             }
             // backtrack;
             sb.append(str + ".");
-            helper(sb, i + 1, count+1);
+            helper(sb, i + 1, count + 1);
             sb.delete(sb.length() - str.length() - 1, sb.length());
         }
     }

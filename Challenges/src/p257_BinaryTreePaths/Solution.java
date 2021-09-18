@@ -22,7 +22,7 @@ class Solution {
     }
 
     public void backtrack(TreeNode node, StringBuilder sb) {
-        String temp = String.valueOf(node.val) + "->";
+        String temp = node.val + "->";
         sb.append(temp);
         if (node.left == null && node.right == null) {
             String newStr = sb.toString().substring(0, sb.length() - 2);

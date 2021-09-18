@@ -28,7 +28,7 @@ class Codec {
             }
             sb.append("#,");
         }
-        return sb.toString().substring(0,sb.length()-1);
+        return sb.toString().substring(0, sb.length() - 1);
     }
 
     // Decodes your encoded data to tree.
