@@ -1,7 +1,5 @@
 package p136_SingleNumber;
 
-import java.util.HashSet;
-
 /**
  * Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
  * <p>
@@ -21,14 +19,10 @@ import java.util.HashSet;
  */
 class Solution {
     public int singleNumber(int[] nums) {
-        HashSet<Integer> set = new HashSet<>(nums.length);
-        for (int num : nums) {
-            if (set.contains(num)) {
-                set.remove(num);
-            } else {
-                set.add(num);
-            }
+        int num = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            num ^= nums[i];
         }
-        return set.iterator().next();
+        return num;
     }
 }
