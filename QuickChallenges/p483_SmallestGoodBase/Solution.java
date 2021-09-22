@@ -1,4 +1,4 @@
-package FastChallenges.p483_SmallestGoodBase;
+package QuickChallenges.p483_SmallestGoodBase;
 
 /**
  * @description:

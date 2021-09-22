@@ -1,7 +1,7 @@
 package p642_DesignSearchAutocompleteSystem;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,88 +10,94 @@ import java.util.List;
  * @CreateDate: 2021/9/6 10:55
  */
 class AutocompleteSystem {
-
-    private TrieNode root, type;
-    private HashMap<String, Integer> count;
-    private StringBuilder sb;
-
+    TrieNode root;
+    TrieNode cur;
+    StringBuilder sb;
     public AutocompleteSystem(String[] sentences, int[] times) {
         root = new TrieNode();
-        type = root;
-        count = new HashMap<>();
+        cur = root;
         sb = new StringBuilder();
-        for (int i = 0; i < sentences.length; i++) {
-            count.put(sentences[i], times[i]);
-            update(sentences[i]);
+
+        for (int i = 0; i < times.length; i++) {
+            add(sentences[i], times[i]);
+        }
+    }
+
+    public void add(String sentence, int t) {
+        TrieNode tmp = root;
+
+        List<TrieNode> visited = new ArrayList<>();
+        for (char c : sentence.toCharArray()) {
+            if (tmp.children[c] == null) {
+                tmp.children[c] = new TrieNode();
+            }
+
+            tmp = tmp.children[c];
+            visited.add(tmp);
+        }
+
+        tmp.s = sentence;
+        tmp.times += t;
+
+        for (TrieNode node : visited) {
+            node.update(tmp);
         }
     }
 
     public List<String> input(char c) {
+        List<String> res = new ArrayList<>();
         if (c == '#') {
-            type = root;
-            String s = sb.toString();
+            add(sb.toString(), 1);
             sb = new StringBuilder();
-            count.put(s, count.getOrDefault(s, 0) + 1);
-            update(s);
-            return new ArrayList<>();
+            cur = root;
+            return res;
         }
+
         sb.append(c);
-        if (type == null) return new ArrayList<>();
-        int index = c == ' ' ? 26 : c - 'a';
-        type = type.children[index];
-        if (type == null) return new ArrayList<>();
-        return new ArrayList<>(type.hotlist);
-    }
-
-    private void update(String s) {
-        TrieNode cur = root;
-        for (int i = 0; i < s.length(); i++) {
-            int index = s.charAt(i) == ' ' ? 26 : s.charAt(i) - 'a';
-            if (cur.children[index] == null) {
-                cur.children[index] = new TrieNode();
-            }
-            cur = cur.children[index];
-            insert(cur.hotlist, s);
+        if (cur != null) {
+            cur = cur.children[c];
         }
 
+        if (cur == null) return res;
+        for (TrieNode node : cur.hot) {
+            res.add(node.s);
+        }
+
+        return res;
     }
 
-    private void insert(ArrayList<String> hotlist, String s) {
-        int i;
-        for (i = 0; i < hotlist.size(); i++) {
-            if (hotlist.get(i).equals(s)) {
-                hotlist.remove(i);
-                break;
-            }
-        }
-        for (i = 0; i < hotlist.size(); i++) {
-            if (greater(s, hotlist.get(i))) {
-                hotlist.add(i, s);
-                break;
-            }
-        }
-        if (i == hotlist.size()) hotlist.add(s);
-        if (hotlist.size() > 3) hotlist.remove(hotlist.size() - 1);
-    }
-
-    private boolean greater(String a, String b) {
-        int count_a = count.get(a), count_b = count.get(b);
-        if (count_a != count_b) return count_a > count_b;
-        int i;
-        for (i = 0; i < Math.min(a.length(), b.length()); i++) {
-            if (a.charAt(i) < b.charAt(i)) return true;
-            else if (a.charAt(i) > b.charAt(i)) return false;
-        }
-        return i == a.length();
-    }
-
-    class TrieNode {
-        private TrieNode[] children;
-        private ArrayList<String> hotlist;
+    class TrieNode implements Comparable<TrieNode> {
+        TrieNode[] children;
+        String s;
+        int times;
+        List<TrieNode> hot;
 
         public TrieNode() {
-            children = new TrieNode[27];
-            hotlist = new ArrayList<>();
+            children = new TrieNode[128];
+            s = null;
+            times = 0;
+            hot = new ArrayList<>();
+        }
+
+        @Override
+        public int compareTo(TrieNode o) {
+            if (this.times == o.times) {
+                return this.s.compareTo(o.s);
+            }
+
+            return o.times - this.times;
+        }
+
+        public void update(TrieNode node) {
+            if (!this.hot.contains(node)) {
+                this.hot.add(node);
+            }
+
+            Collections.sort(hot);
+
+            if (hot.size() > 3) {
+                hot.remove(hot.size() - 1);
+            }
         }
     }
 }

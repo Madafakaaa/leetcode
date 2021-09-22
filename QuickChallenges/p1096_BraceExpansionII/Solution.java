@@ -1,4 +1,4 @@
-package FastChallenges.p1096_BraceExpansionII;
+package QuickChallenges.p1096_BraceExpansionII;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,6 +1,6 @@
 package p000_OnlineAssessment;
 
-import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 /**
  * @description:
@@ -8,39 +8,24 @@ import java.util.ArrayList;
  * @CreateDate: 2021/3/9 9:37
  */
 class Solution {
-
-    ArrayList<Integer> leaves1;
-    ArrayList<Integer> leaves2;
-
-    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
-        leaves1 = new ArrayList<Integer>();
-        leaves2 = new ArrayList<Integer>();
-        dfs(root1, leaves1);
-        dfs(root2, leaves2);
-        if (leaves1.size() != leaves2.size()) {
-            return false;
-        }
-        for (int i = 0; i < leaves1.size(); i++) {
-            if (leaves1.get(i) != leaves2.get(i)) {
-                return false;
+    public double minmaxGasDist(int[] stations, int k) {
+        PriorityQueue<Double> heap = new PriorityQueue<Double>((a, b) -> {
+            if (a > b) {
+                return 1;
+            } else if (a < b) {
+                return -1;
+            } else {
+                return 0;
             }
+        });
+        for (int i = 1; i < stations.length; i++) {
+            heap.add((double) (stations[i] - stations[i - 1]));
         }
-        return true;
-    }
-
-    public void dfs(TreeNode node, ArrayList<Integer> leaves) {
-        if (node == null) {
-            return;
+        for (int i = 0; i < k; i++) {
+            double tempMax = heap.poll();
+            heap.add(tempMax / 2.0);
+            heap.add(tempMax / 2.0);
         }
-        if (node.left == null && node.right == null) {
-            leaves.add(node.val);
-            return;
-        }
-        if (node.left != null) {
-            dfs(node.left, leaves);
-        }
-        if (node.right != null) {
-            dfs(node.right, leaves);
-        }
+        return heap.peek();
     }
 }

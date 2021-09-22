@@ -1,4 +1,4 @@
-package FastChallenges.p1356_SortIntegersByTheNumberOf1Bits;
+package QuickChallenges.p1356_SortIntegersByTheNumberOf1Bits;
 
 /**
  * @description:

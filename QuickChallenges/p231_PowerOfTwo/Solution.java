@@ -1,4 +1,4 @@
-package FastChallenges.p231_PowerOfTwo;
+package QuickChallenges.p231_PowerOfTwo;
 
 /**
  * @description:

@@ -1,4 +1,4 @@
-package FastChallenges.p939_MinimumAreaRectangle;
+package QuickChallenges.p939_MinimumAreaRectangle;
 
 /**
  * @description:
