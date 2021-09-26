@@ -594,6 +594,271 @@ class Solution {
  * return dp[0][sarr.length-1];
  * }
  * }
+ * <p>
+ * class Solution {
+ * public int minInsertions(String s) {
+ * //the max number is going to be the length of the string itself, since we can just concatenate its mirror image to generate a sure shot palindrome.
+ * //checking if palindrome is straightforward.
+ * //Apparently this is a DP as well. The hint is not intuitive at all. In fact, if you apply hint2 to "leetcode" we would see that "eee" is a longest palindromic subsequence and its length is 3, so
+ * //we need to insert 5 (8-3) chars to make entire string a palindrome. This seems to be correct, except that the solution "leetcodocteel" also inserts an additional e, and "d" is the char
+ * //that is not inserted, even though it was not part of the LPS. So that solution is just not intuitive.
+ * //instead, lets try a more traditional intuition. That is if the chars at i and j match, then we can say that dp(i,j) = dp(i+1, j-1). Else, dp(i,j) = 1 + min(dp(i+1,j), dp(i,j-1)) since
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both.
+ * //finally we return dp(0,n-1). We need to do outer loop from high to low.
+ * <p>
+ * //we should not need entire dp[n][n] array since the dp step only refers to one row below.
+ * char [] sarr = s.toCharArray();
+ * int [] dp = new int [sarr.length];
+ * <p>
+ * for(int i = sarr.length-1; i>=0; i--) {
+ * int prev = 0;
+ * for(int j=i+1; j < sarr.length; j++) {
+ * int bottomLeft = prev;
+ * prev = dp[j];
+ * if(sarr[i]==sarr[j]) {
+ * dp[j] = bottomLeft;
+ * } else {
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both. So...
+ * dp[j] = 1 + Math.min(dp[j], dp[j-1]); // here dp[j] in rhs is from i+1st row, where dp[j-1] is from this same row
+ * }
+ * }
+ * }
+ * <p>
+ * return dp[sarr.length-1];
+ * <p>
+ * }
+ * <p>
+ * public int minInsertions2D(String s) {
+ * //lets first use 2D dp to make it simpler
+ * char [] sarr = s.toCharArray();
+ * int [][] dp = new int [sarr.length][sarr.length];
+ * <p>
+ * for(int i = sarr.length-1; i>=0; i--) {
+ * for(int j=i+1; j < sarr.length; j++) {
+ * if(sarr[i]==sarr[j]) {
+ * dp[i][j] = dp[i+1][j-1];
+ * } else {
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both. So...
+ * dp[i][j] = 1 + Math.min(dp[i+1][j], dp[i][j-1]);
+ * }
+ * }
+ * }
+ * <p>
+ * return dp[0][sarr.length-1];
+ * }
+ * }
+ * <p>
+ * class Solution {
+ * public int minInsertions(String s) {
+ * //the max number is going to be the length of the string itself, since we can just concatenate its mirror image to generate a sure shot palindrome.
+ * //checking if palindrome is straightforward.
+ * //Apparently this is a DP as well. The hint is not intuitive at all. In fact, if you apply hint2 to "leetcode" we would see that "eee" is a longest palindromic subsequence and its length is 3, so
+ * //we need to insert 5 (8-3) chars to make entire string a palindrome. This seems to be correct, except that the solution "leetcodocteel" also inserts an additional e, and "d" is the char
+ * //that is not inserted, even though it was not part of the LPS. So that solution is just not intuitive.
+ * //instead, lets try a more traditional intuition. That is if the chars at i and j match, then we can say that dp(i,j) = dp(i+1, j-1). Else, dp(i,j) = 1 + min(dp(i+1,j), dp(i,j-1)) since
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both.
+ * //finally we return dp(0,n-1). We need to do outer loop from high to low.
+ * <p>
+ * //we should not need entire dp[n][n] array since the dp step only refers to one row below.
+ * char [] sarr = s.toCharArray();
+ * int [] dp = new int [sarr.length];
+ * <p>
+ * for(int i = sarr.length-1; i>=0; i--) {
+ * int prev = 0;
+ * for(int j=i+1; j < sarr.length; j++) {
+ * int bottomLeft = prev;
+ * prev = dp[j];
+ * if(sarr[i]==sarr[j]) {
+ * dp[j] = bottomLeft;
+ * } else {
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both. So...
+ * dp[j] = 1 + Math.min(dp[j], dp[j-1]); // here dp[j] in rhs is from i+1st row, where dp[j-1] is from this same row
+ * }
+ * }
+ * }
+ * <p>
+ * return dp[sarr.length-1];
+ * <p>
+ * }
+ * <p>
+ * public int minInsertions2D(String s) {
+ * //lets first use 2D dp to make it simpler
+ * char [] sarr = s.toCharArray();
+ * int [][] dp = new int [sarr.length][sarr.length];
+ * <p>
+ * for(int i = sarr.length-1; i>=0; i--) {
+ * for(int j=i+1; j < sarr.length; j++) {
+ * if(sarr[i]==sarr[j]) {
+ * dp[i][j] = dp[i+1][j-1];
+ * } else {
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both. So...
+ * dp[i][j] = 1 + Math.min(dp[i+1][j], dp[i][j-1]);
+ * }
+ * }
+ * }
+ * <p>
+ * return dp[0][sarr.length-1];
+ * }
+ * }
+ * <p>
+ * class Solution {
+ * public int minInsertions(String s) {
+ * //the max number is going to be the length of the string itself, since we can just concatenate its mirror image to generate a sure shot palindrome.
+ * //checking if palindrome is straightforward.
+ * //Apparently this is a DP as well. The hint is not intuitive at all. In fact, if you apply hint2 to "leetcode" we would see that "eee" is a longest palindromic subsequence and its length is 3, so
+ * //we need to insert 5 (8-3) chars to make entire string a palindrome. This seems to be correct, except that the solution "leetcodocteel" also inserts an additional e, and "d" is the char
+ * //that is not inserted, even though it was not part of the LPS. So that solution is just not intuitive.
+ * //instead, lets try a more traditional intuition. That is if the chars at i and j match, then we can say that dp(i,j) = dp(i+1, j-1). Else, dp(i,j) = 1 + min(dp(i+1,j), dp(i,j-1)) since
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both.
+ * //finally we return dp(0,n-1). We need to do outer loop from high to low.
+ * <p>
+ * //we should not need entire dp[n][n] array since the dp step only refers to one row below.
+ * char [] sarr = s.toCharArray();
+ * int [] dp = new int [sarr.length];
+ * <p>
+ * for(int i = sarr.length-1; i>=0; i--) {
+ * int prev = 0;
+ * for(int j=i+1; j < sarr.length; j++) {
+ * int bottomLeft = prev;
+ * prev = dp[j];
+ * if(sarr[i]==sarr[j]) {
+ * dp[j] = bottomLeft;
+ * } else {
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both. So...
+ * dp[j] = 1 + Math.min(dp[j], dp[j-1]); // here dp[j] in rhs is from i+1st row, where dp[j-1] is from this same row
+ * }
+ * }
+ * }
+ * <p>
+ * return dp[sarr.length-1];
+ * <p>
+ * }
+ * <p>
+ * public int minInsertions2D(String s) {
+ * //lets first use 2D dp to make it simpler
+ * char [] sarr = s.toCharArray();
+ * int [][] dp = new int [sarr.length][sarr.length];
+ * <p>
+ * for(int i = sarr.length-1; i>=0; i--) {
+ * for(int j=i+1; j < sarr.length; j++) {
+ * if(sarr[i]==sarr[j]) {
+ * dp[i][j] = dp[i+1][j-1];
+ * } else {
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both. So...
+ * dp[i][j] = 1 + Math.min(dp[i+1][j], dp[i][j-1]);
+ * }
+ * }
+ * }
+ * <p>
+ * return dp[0][sarr.length-1];
+ * }
+ * }
+ * <p>
+ * class Solution {
+ * public int minInsertions(String s) {
+ * //the max number is going to be the length of the string itself, since we can just concatenate its mirror image to generate a sure shot palindrome.
+ * //checking if palindrome is straightforward.
+ * //Apparently this is a DP as well. The hint is not intuitive at all. In fact, if you apply hint2 to "leetcode" we would see that "eee" is a longest palindromic subsequence and its length is 3, so
+ * //we need to insert 5 (8-3) chars to make entire string a palindrome. This seems to be correct, except that the solution "leetcodocteel" also inserts an additional e, and "d" is the char
+ * //that is not inserted, even though it was not part of the LPS. So that solution is just not intuitive.
+ * //instead, lets try a more traditional intuition. That is if the chars at i and j match, then we can say that dp(i,j) = dp(i+1, j-1). Else, dp(i,j) = 1 + min(dp(i+1,j), dp(i,j-1)) since
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both.
+ * //finally we return dp(0,n-1). We need to do outer loop from high to low.
+ * <p>
+ * //we should not need entire dp[n][n] array since the dp step only refers to one row below.
+ * char [] sarr = s.toCharArray();
+ * int [] dp = new int [sarr.length];
+ * <p>
+ * for(int i = sarr.length-1; i>=0; i--) {
+ * int prev = 0;
+ * for(int j=i+1; j < sarr.length; j++) {
+ * int bottomLeft = prev;
+ * prev = dp[j];
+ * if(sarr[i]==sarr[j]) {
+ * dp[j] = bottomLeft;
+ * } else {
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both. So...
+ * dp[j] = 1 + Math.min(dp[j], dp[j-1]); // here dp[j] in rhs is from i+1st row, where dp[j-1] is from this same row
+ * }
+ * }
+ * }
+ * <p>
+ * return dp[sarr.length-1];
+ * <p>
+ * }
+ * <p>
+ * public int minInsertions2D(String s) {
+ * //lets first use 2D dp to make it simpler
+ * char [] sarr = s.toCharArray();
+ * int [][] dp = new int [sarr.length][sarr.length];
+ * <p>
+ * for(int i = sarr.length-1; i>=0; i--) {
+ * for(int j=i+1; j < sarr.length; j++) {
+ * if(sarr[i]==sarr[j]) {
+ * dp[i][j] = dp[i+1][j-1];
+ * } else {
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both. So...
+ * dp[i][j] = 1 + Math.min(dp[i+1][j], dp[i][j-1]);
+ * }
+ * }
+ * }
+ * <p>
+ * return dp[0][sarr.length-1];
+ * }
+ * }
+ * <p>
+ * class Solution {
+ * public int minInsertions(String s) {
+ * //the max number is going to be the length of the string itself, since we can just concatenate its mirror image to generate a sure shot palindrome.
+ * //checking if palindrome is straightforward.
+ * //Apparently this is a DP as well. The hint is not intuitive at all. In fact, if you apply hint2 to "leetcode" we would see that "eee" is a longest palindromic subsequence and its length is 3, so
+ * //we need to insert 5 (8-3) chars to make entire string a palindrome. This seems to be correct, except that the solution "leetcodocteel" also inserts an additional e, and "d" is the char
+ * //that is not inserted, even though it was not part of the LPS. So that solution is just not intuitive.
+ * //instead, lets try a more traditional intuition. That is if the chars at i and j match, then we can say that dp(i,j) = dp(i+1, j-1). Else, dp(i,j) = 1 + min(dp(i+1,j), dp(i,j-1)) since
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both.
+ * //finally we return dp(0,n-1). We need to do outer loop from high to low.
+ * <p>
+ * //we should not need entire dp[n][n] array since the dp step only refers to one row below.
+ * char [] sarr = s.toCharArray();
+ * int [] dp = new int [sarr.length];
+ * <p>
+ * for(int i = sarr.length-1; i>=0; i--) {
+ * int prev = 0;
+ * for(int j=i+1; j < sarr.length; j++) {
+ * int bottomLeft = prev;
+ * prev = dp[j];
+ * if(sarr[i]==sarr[j]) {
+ * dp[j] = bottomLeft;
+ * } else {
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both. So...
+ * dp[j] = 1 + Math.min(dp[j], dp[j-1]); // here dp[j] in rhs is from i+1st row, where dp[j-1] is from this same row
+ * }
+ * }
+ * }
+ * <p>
+ * return dp[sarr.length-1];
+ * <p>
+ * }
+ * <p>
+ * public int minInsertions2D(String s) {
+ * //lets first use 2D dp to make it simpler
+ * char [] sarr = s.toCharArray();
+ * int [][] dp = new int [sarr.length][sarr.length];
+ * <p>
+ * for(int i = sarr.length-1; i>=0; i--) {
+ * for(int j=i+1; j < sarr.length; j++) {
+ * if(sarr[i]==sarr[j]) {
+ * dp[i][j] = dp[i+1][j-1];
+ * } else {
+ * //we have to add at least either ith char or jth char to make whole string a palindrome, if not both. So...
+ * dp[i][j] = 1 + Math.min(dp[i+1][j], dp[i][j-1]);
+ * }
+ * }
+ * }
+ * <p>
+ * return dp[0][sarr.length-1];
+ * }
+ * }
  */
 
 

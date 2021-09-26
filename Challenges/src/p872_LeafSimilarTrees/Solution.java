@@ -21,7 +21,7 @@ class Solution {
             return false;
         }
         for (int i = 0; i < leaves1.size(); i++) {
-            if (leaves1.get(i) != leaves2.get(i)) {
+            if (!leaves1.get(i).equals(leaves2.get(i))) {
                 return false;
             }
         }

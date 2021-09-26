@@ -13,6 +13,7 @@ class AutocompleteSystem {
     TrieNode root;
     TrieNode cur;
     StringBuilder sb;
+
     public AutocompleteSystem(String[] sentences, int[] times) {
         root = new TrieNode();
         cur = root;

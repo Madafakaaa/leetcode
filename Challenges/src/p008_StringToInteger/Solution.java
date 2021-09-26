@@ -1,34 +1,36 @@
 package p008_StringToInteger;
 
 class Solution {
-    public int myAtoi(String str) {
-        // empty string
-        if (str == null || str.trim().length() == 0) {
+    public int myAtoi(String s) {
+        s = s.trim();
+        if (s.isEmpty()) {
             return 0;
         }
-        int sign = 1, result = 0, i = 0;
-        // trim the str
-        while (str.charAt(i) == ' ') {
+        char[] chars = s.toCharArray();
+        int i = 0;
+        int res = 0;
+        int sign = 1;
+        if (chars[i] == '+') {
             i++;
-        }
-        // read the sign
-        if (str.charAt(i) == '-' || str.charAt(i) == '+') {
-            sign = str.charAt(i) == '+' ? 1 : -1;
+        } else if (chars[i] == '-') {
             i++;
+            sign = -1;
         }
-        while (i < str.length()) {
-            // check if the character is digit
-            int digit = str.charAt(i) - '0';
-            if (digit < 0 || digit > 9) {
-                break;
+        while (i < chars.length) {
+            if (chars[i] >= '0' && chars[i] <= '9') {
+                if (res > (Integer.MAX_VALUE - chars[i] + '0') / 10) {
+                    if (sign == 1) {
+                        return Integer.MAX_VALUE;
+                    } else {
+                        return Integer.MIN_VALUE;
+                    }
+                }
+                res = 10 * res + chars[i] - '0';
+            } else {
+                return sign * res;
             }
-            // detect overflow !!!
-            if (result > (Integer.MAX_VALUE - digit) / 10) {
-                return sign == -1 ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-            }
-            result = result * 10 + digit;
             i++;
         }
-        return result * sign;
+        return sign * res;
     }
 }
