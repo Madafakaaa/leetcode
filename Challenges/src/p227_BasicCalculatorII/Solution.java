@@ -22,47 +22,43 @@ import java.util.Stack;
  * Output: 5
  */
 class Solution {
-
-    Stack<Integer> stack;
-    char operation;
-    Integer tempValue;
-
     public int calculate(String s) {
-        if (s.isEmpty()) {
-            return 0;
-        }
-        stack = new Stack<>();
-        operation = '+';
-        tempValue = 0;
+        int res = 0;
+        int tempValue = 0;
+        char sign = '+';
+        Stack<Integer> stack = new Stack<>();
         for (char c : s.toCharArray()) {
             if (c == ' ') {
                 continue;
             }
-            if (Character.isDigit(c)) {
-                tempValue = tempValue * 10 + c - '0';
+            if (c >= '0' && c <= '9') {
+                tempValue = 10 * tempValue + c - '0';
             } else {
-                update();
-                operation = c;
+                if (sign == '+') {
+                    stack.add(tempValue);
+                } else if (sign == '-') {
+                    stack.add(-tempValue);
+                } else if (sign == '*') {
+                    stack.add(tempValue * stack.pop());
+                } else {
+                    stack.add(stack.pop() / tempValue);
+                }
                 tempValue = 0;
+                sign = c;
             }
         }
-        update();
-        int res = 0;
+        if (sign == '+') {
+            stack.add(tempValue);
+        } else if (sign == '-') {
+            stack.add(-tempValue);
+        } else if (sign == '*') {
+            stack.add(tempValue * stack.pop());
+        } else {
+            stack.add(stack.pop() / tempValue);
+        }
         while (!stack.isEmpty()) {
             res += stack.pop();
         }
         return res;
-    }
-
-    public void update() {
-        if (operation == '+') {
-            stack.add(tempValue);
-        } else if (operation == '-') {
-            stack.add(-tempValue);
-        } else if (operation == '*') {
-            stack.add(stack.pop() * tempValue);
-        } else {
-            stack.add(stack.pop() / tempValue);
-        }
     }
 }

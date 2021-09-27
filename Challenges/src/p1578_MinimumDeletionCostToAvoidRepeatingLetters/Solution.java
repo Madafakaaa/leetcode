@@ -7,27 +7,20 @@ package p1578_MinimumDeletionCostToAvoidRepeatingLetters;
  */
 class Solution {
     public int minCost(String s, int[] cost) {
-        if (s.length() <= 1) {
-            return 0;
-        }
-        int totalCost = 0;
-        int tempTotalCost = 0;
-        int tempMaxCost = Integer.MIN_VALUE;
-        char[] chars = s.toCharArray();
-        for (int i = 0; i < s.length() - 1; i++) {
-            if (chars[i] == chars[i + 1]) {
-                while (i < s.length() && chars[i] == chars[i + 1]) {
-                    tempTotalCost += cost[i];
-                    tempMaxCost = Math.max(tempMaxCost, cost[i]);
-                    i++;
-                }
-                tempTotalCost += cost[i];
-                tempMaxCost = Math.min(tempMaxCost, cost[i]);
-                totalCost += tempTotalCost - tempMaxCost;
-                tempTotalCost = 0;
-                tempMaxCost = Integer.MAX_VALUE;
+        int result = 0;
+        for (int i = 1; i < s.length(); i++) {
+            int min_value = 0;
+            char c1 = s.charAt(i);
+            char c2 = s.charAt(i - 1);
+            if (c1 == c2) {
+                if (cost[i] <= cost[i - 1]) {
+                    min_value = cost[i];
+                    cost[i] = cost[i - 1];
+                } else
+                    min_value = cost[i - 1];
+                result += min_value;
             }
         }
-        return totalCost;
+        return result;
     }
 }

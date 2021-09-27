@@ -7,21 +7,18 @@ package p915_PartitionArrayIntoDisjointIntervals;
  */
 class Solution {
     public int partitionDisjoint(int[] nums) {
-        int length = nums.length;
-        int[] minRight = new int[length];
-        int tempMinRight = nums[length - 1];
-        for (int i = length - 1; i >= 0; i--) {
-            tempMinRight = Math.min(tempMinRight, nums[i]);
-            minRight[i] = tempMinRight;
-        }
-        int tempMaxLeft = nums[0];
-        for (int i = 0; i < length; i++) {
-            tempMaxLeft = Math.max(tempMaxLeft, nums[i]);
-            if (minRight[i + 1] >= tempMaxLeft) {
-                return i;
+        int leftmax = nums[0];
+        int maxInRun = nums[0];
+        int ans = 0;
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > maxInRun) {
+                maxInRun = nums[i];
+            } else if (nums[i] < leftmax) {
+                ans = i;
+                leftmax = maxInRun;
             }
         }
-        return -1;
+        return ans + 1;
     }
 }
 
