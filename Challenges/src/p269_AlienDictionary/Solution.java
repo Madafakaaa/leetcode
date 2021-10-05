@@ -1,6 +1,8 @@
 package p269_AlienDictionary;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @description:
@@ -9,67 +11,98 @@ import java.util.*;
  */
 class Solution {
 
-
     public String alienOrder(String[] words) {
-        // Find all characters
-        HashMap<Character, Set<Character>> smallerAdjs = new HashMap<>(26);
-        int[] counts = new int[26];
-        Arrays.fill(counts, -1);
+        // find elements
+        int[] inDegree = new int[26];
+        int count = 0;
+        Arrays.fill(inDegree, -1);
         for (String word : words) {
-            for (Character c : word.toCharArray()) {
-                if (counts[c - 'a'] == -1) {
-                    counts[c - 'a'] = 0;
-                    smallerAdjs.put(c, new HashSet<>(25));
+            for (char c : word.toCharArray()) {
+                if (inDegree[c - 'a'] != 0) {
+                    inDegree[c - 'a'] = 0;
+                    count++;
                 }
             }
         }
-        // Find all edges
+        boolean[][] adjacency = new boolean[26][26];
+        // find edges
+        outLoop:
         for (int i = 0; i < words.length - 1; i++) {
             String word1 = words[i];
             String word2 = words[i + 1];
-            // Check that word2 is not a prefix of word1.
-            if (word1.length() > word2.length() && word1.startsWith(word2)) {
-                return "";
-            }
             for (int j = 0; j < Math.min(word1.length(), word2.length()); j++) {
                 if (word1.charAt(j) != word2.charAt(j)) {
-                    if (!smallerAdjs.get(word1.charAt(j)).contains(word2.charAt(j))) {
-                        // increase inDegree
-                        counts[word2.charAt(j) - 'a']++;
-                        // add new smaller adj
-                        smallerAdjs.get(word1.charAt(j)).add(word2.charAt(j));
+                    if (adjacency[word2.charAt(j) - 'a'][word1.charAt(j) - 'a']) {
+                        return "";
                     }
-                    break;
+                    if (!adjacency[word1.charAt(j) - 'a'][word2.charAt(j) - 'a']) {
+                        adjacency[word1.charAt(j) - 'a'][word2.charAt(j) - 'a'] = true;
+                        inDegree[word2.charAt(j) - 'a']++;
+                    }
+                    continue outLoop;
                 }
             }
+            if (word1.length() > word2.length()) {
+                return "";
+            }
         }
-        // Topological sort
+        boolean remain = true;
         StringBuilder sb = new StringBuilder();
-        Queue<Character> queue = new LinkedList<>();
-        boolean hasNewChar = true;
-        while (hasNewChar) {
-            hasNewChar = false;
-            for (int i = 0; i < counts.length; i++) {
-                if (counts[i] == 0) {
-                    counts[i] = -1;
-                    queue.add((char) ('a' + i));
-                    sb.append((char) ('a' + i));
-                    hasNewChar = true;
+        Set<Character> set = new HashSet<>();
+        while (remain) {
+            remain = false;
+            for (int i = 0; i < 26; i++) {
+                if (inDegree[i] == 0) {
+                    set.add((char) (i + 'a'));
+                    inDegree[i] = -1;
                 }
             }
-            while (!queue.isEmpty()) {
-                Character temp = queue.poll();
-                Set<Character> smallerChars = smallerAdjs.get(temp);
-                for (char smallerChar : smallerChars) {
-                    counts[smallerChar - 'a']--;
+            for (char c : set) {
+                sb.append(c);
+                for (int i = 0; i < 26; i++) {
+                    if (adjacency[c - 'a'][i]) {
+                        inDegree[i]--;
+                    }
+                }
+            }
+            set.clear();
+            for (int i = 0; i < 26; i++) {
+                if (inDegree[i] == 0) {
+                    remain = true;
+                    continue;
                 }
             }
         }
-        String res = sb.toString();
-        if (sb.length() < smallerAdjs.size()) {
+        if (sb.length() != count) {
             return "";
         }
-        return res;
+        return sb.toString();
     }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

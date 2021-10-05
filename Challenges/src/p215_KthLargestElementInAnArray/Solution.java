@@ -1,7 +1,5 @@
 package p215_KthLargestElementInAnArray;
 
-import java.util.Arrays;
-
 /**
  * Given an integer array nums and an integer k, return the kth largest element in the array.
  * Note that it is the kth largest element in the sorted order, not the kth distinct element.
@@ -15,7 +13,34 @@ import java.util.Arrays;
  */
 class Solution {
     public int findKthLargest(int[] nums, int k) {
-        Arrays.sort(nums);
-        return nums[nums.length - k];
+        return quickSort(nums, 0, nums.length - 1, k);
+    }
+
+    public int quickSort(int[] nums, int start, int end, int k) {
+        swap(nums, end, start + (end - start) / 2);
+        int base = nums[end];
+        int i = start;
+        int j = start;
+        while (i < end) {
+            if (nums[i] > base) {
+                swap(nums, i, j++);
+            }
+            i++;
+        }
+        if (j + 1 == k) {
+            return base;
+        }
+        swap(nums, j, end);
+        if (j + 1 < k) {
+            return quickSort(nums, j + 1, end, k);
+        } else {
+            return quickSort(nums, start, j - 1, k);
+        }
+    }
+
+    public void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
     }
 }

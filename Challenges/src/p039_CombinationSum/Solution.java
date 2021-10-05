@@ -1,7 +1,6 @@
 package p039_CombinationSum;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,29 +37,27 @@ import java.util.List;
  */
 class Solution {
 
-    List<List<Integer>> result;
-
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        Arrays.sort(candidates);
-        result = new ArrayList<>(150);
-        bfs(candidates, target, 0, new ArrayList<>(candidates.length), 0);
-        return result;
+        List<List<Integer>> res = new ArrayList<>();
+        if (candidates.length <= 0) {
+            return res;
+        }
+        backtrack(candidates, target, res, new ArrayList<Integer>(), 0);
+        return res;
     }
 
-    public void bfs(int[] candidates, int target, int index, List<Integer> combination, Integer sum) {
+    public void backtrack(int[] candidates, int target, List<List<Integer>> res, List<Integer> list, int index) {
+        if (target < 0) {
+            return;
+        }
+        if (target == 0) {
+            res.add(new ArrayList<>(list));
+            return;
+        }
         for (int i = index; i < candidates.length; i++) {
-            if (sum + candidates[i] > target) {
-                break;
-            }
-            List<Integer> newCombination = new ArrayList<>(candidates.length);
-            newCombination.addAll(combination);
-            newCombination.add(candidates[i]);
-            if (sum + candidates[i] == target) {
-                result.add(newCombination);
-                break;
-            }
-            bfs(candidates, target, i, newCombination, sum + candidates[i]);
+            list.add(candidates[i]);
+            backtrack(candidates, target - candidates[i], res, list, i);
+            list.remove(list.size() - 1);
         }
     }
-
 }

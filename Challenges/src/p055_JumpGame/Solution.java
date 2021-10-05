@@ -20,19 +20,12 @@ class Solution {
         if (nums.length == 1) return true;
         if (nums[0] == 0) return false;
         if (nums[0] >= nums.length - 1) return true;
-        int currentIndex = 0, maxJump = nums[0], nextIndex = 0;
-        while (maxJump < nums.length - 1) {
-            for (int i = currentIndex + 1; i <= currentIndex + nums[currentIndex] && i < nums.length; i++) {
-                if (maxJump < i + nums[i]) {
-                    nextIndex = i;
-                    maxJump = i + nums[i];
-                }
-            }
-            if (nextIndex == currentIndex) {
-                return false;
-            }
-            currentIndex = nextIndex;
+        int maxJump = 0;
+        int temp = 0;
+        while (temp < nums.length && temp <= maxJump) {
+            maxJump = Math.max(maxJump, temp + nums[temp]);
+            temp++;
         }
-        return true;
+        return maxJump >= nums.length - 1;
     }
 }
