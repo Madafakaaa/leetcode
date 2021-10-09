@@ -1,7 +1,5 @@
 package p322_CoinChange;
 
-import java.util.Arrays;
-
 /**
  * You are given an integer array coins representing coins of different denominations and an integer amount representing a total amount of money.
  * <p>
@@ -30,33 +28,24 @@ import java.util.Arrays;
  * Input: coins = [1], amount = 2
  * Output: 2
  */
-class Solution {
+public class Solution {
+
     public int coinChange(int[] coins, int amount) {
-        Arrays.sort(coins);
-        int[] dp = new int[amount + 1];
-        for (int i = 1; i <= amount; i++) {
-            dp[i] = -1;
-        }
+        if (amount < 1) return 0;
+        return coinChange(coins, amount, new int[amount]);
+    }
+
+    private int coinChange(int[] coins, int rem, int[] count) {
+        if (rem < 0) return -1;
+        if (rem == 0) return 0;
+        if (count[rem - 1] != 0) return count[rem - 1];
+        int min = Integer.MAX_VALUE;
         for (int coin : coins) {
-            if (coin <= amount) {
-                dp[coin] = 1;
-            } else {
-                break;
-            }
+            int res = coinChange(coins, rem - coin, count);
+            if (res >= 0 && res < min)
+                min = 1 + res;
         }
-        for (int i = 1; i <= amount; i++) {
-            if (dp[i] == 1) {
-                continue;
-            }
-            int localMin = Integer.MAX_VALUE;
-            for (int coin : coins) {
-                int prev = i - coin;
-                if ((i - coin > 0) && dp[i - coin] != -1) {
-                    localMin = Math.min(localMin, dp[i - coin] + 1);
-                }
-            }
-            dp[i] = localMin == Integer.MAX_VALUE ? -1 : localMin;
-        }
-        return dp[amount];
+        count[rem - 1] = (min == Integer.MAX_VALUE) ? -1 : min;
+        return count[rem - 1];
     }
 }

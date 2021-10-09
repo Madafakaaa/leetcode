@@ -24,9 +24,11 @@ class Solution {
     public int height;
     public int width;
     public Set<String> res;
+    public TrieNode root;
     public Set<String> wordsSet;
 
     public List<String> findWords(char[][] board, String[] words) {
+        this.root = new TrieNode();
         this.board = board;
         this.height = board.length;
         this.width = board[0].length;
@@ -37,45 +39,92 @@ class Solution {
         res = new HashSet<>(words.length);
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                Set<String> localSet = new HashSet<>(wordsSet);
-                for (String word : localSet) {
-                    backtrack(i, j, 0, word);
-                }
+                backtrack(i, j, 0, root);
             }
         }
         List<String> resList = new ArrayList<>(res);
         return resList;
     }
 
-    public void backtrack(int i, int j, int k, String word) {
-        if (res.contains(word)) {
+    public void backtrack(int i, int j, int k, TrieNode trieNode) {
+        if (trieNode == null) {
             return;
         }
         // word detected
-        if (k >= word.length()) {
-            this.res.add(word);
-            wordsSet.remove(word);
+        if (trieNode.isEnd) {
+            this.res.add(trieNode.word);
             return;
         }
         // backtrack
         // 1. out of bound
-        if (i < 0 || j < 0 || i >= height || j >= width) {
+        if (i < 0 || j < 0 || i >= height || j >= width || board[i][j] == '#') {
             return;
         }
         // 2. current char not matching
-        if (board[i][j] != word.charAt(k)) {
+        if (trieNode.nodes[board[i][j] - 'a'] == null) {
             return;
         }
         // 3. keep backtracking
         // replace current char
+        char tempChar = board[i][j];
         board[i][j] = '#';
-        backtrack(i + 1, j, k + 1, word);
-        backtrack(i - 1, j, k + 1, word);
-        backtrack(i, j + 1, k + 1, word);
-        backtrack(i, j - 1, k + 1, word);
+        backtrack(i + 1, j, k + 1, trieNode.nodes[tempChar - 'a']);
+        backtrack(i - 1, j, k + 1, trieNode.nodes[tempChar - 'a']);
+        backtrack(i, j + 1, k + 1, trieNode.nodes[tempChar - 'a']);
+        backtrack(i, j - 1, k + 1, trieNode.nodes[tempChar - 'a']);
         // restore current char
-        board[i][j] = word.charAt(k);
+        board[i][j] = tempChar;
     }
 
+    public void insert(String s) {
+        TrieNode node = this.root;
+        for (char c : s.toCharArray()) {
+            if (node.nodes[c - 'a'] == null) {
+                node.nodes[c - 'a'] = new TrieNode();
+            }
+            node = node.nodes[c - 'a'];
+        }
+        node.isEnd = true;
+        node.word = s;
+    }
+
+    class TrieNode {
+        TrieNode[] nodes;
+        boolean isEnd;
+        String word;
+
+        public TrieNode() {
+            isEnd = false;
+            nodes = new TrieNode[26];
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

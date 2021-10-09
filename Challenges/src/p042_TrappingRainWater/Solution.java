@@ -1,24 +1,23 @@
 package p042_TrappingRainWater;
 
 class Solution {
-
     public int trap(int[] height) {
-        if (height.length == 0) return 0;
+        int[] leftMax = new int[height.length];
+        int[] rightMax = new int[height.length];
+        int tempMax = 0;
+        for (int i = 0; i < height.length; i++) {
+            tempMax = Math.max(tempMax, height[i]);
+            leftMax[i] = tempMax;
+        }
+        tempMax = 0;
+        for (int i = height.length - 1; i >= 0; i--) {
+            tempMax = Math.max(tempMax, height[i]);
+            rightMax[i] = tempMax;
+        }
         int res = 0;
-        int left = 0, right = height.length - 1;
-        int leftHeight = height[0], rightHeight = height[height.length - 1];
-        while (left < right) {
-            if (leftHeight <= rightHeight) {
-                left++;
-                if (height[left] > leftHeight) leftHeight = height[left];
-                res += leftHeight - height[left];
-            } else {
-                right--;
-                if (height[right] > rightHeight) rightHeight = height[right];
-                res += rightHeight - height[right];
-            }
+        for (int i = 0; i < height.length; i++) {
+            res += Math.min(leftMax[i], rightMax[i]) - height[i];
         }
         return res;
     }
-
 }

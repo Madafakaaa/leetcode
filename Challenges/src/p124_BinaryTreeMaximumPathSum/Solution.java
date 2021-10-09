@@ -20,23 +20,25 @@ package p124_BinaryTreeMaximumPathSum;
  */
 class Solution {
 
-    Integer result;
+    int res;
 
     public int maxPathSum(TreeNode root) {
-        this.result = Integer.MIN_VALUE;
-        getMaxPathSum(root);
-        return this.result;
+        res = root.val;
+        dfs(root);
+        return res;
     }
 
-    public int getMaxPathSum(TreeNode root) {
-        if (root == null) {
+    public int dfs(TreeNode node) {
+        if (node == null) {
             return 0;
         }
-        int leftMax = getMaxPathSum(root.left);
-        int rightMax = getMaxPathSum(root.right);
-        int localMax = root.val + Math.max(0, leftMax) + Math.max(0, rightMax);
-        this.result = Math.max(localMax, this.result);
-        return root.val + Math.max(Math.max(leftMax, rightMax), 0);
-    }
+        int left = dfs(node.left);
+        int right = dfs(node.right);
 
+        int sum = left + right + node.val;
+        int leftSum = left + node.val;
+        int rightSum = right + node.val;
+        res = Math.max(node.val, Math.max(Math.max(res, sum), (Math.max(leftSum, rightSum))));
+        return Math.max(node.val, Math.max(leftSum, rightSum));
+    }
 }
