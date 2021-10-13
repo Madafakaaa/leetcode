@@ -5,7 +5,7 @@ package p000_Interview;
  * @author: ziyi3.zhang
  * @CreateDate: 2021/9/28 13:54
  */
-class Solution {
+class Test {
 
     public int FindString(String source, String pattern, Boolean ignoreCase) {
         if (source == null || source.isEmpty() || pattern == null || pattern.isEmpty() || source.length() < pattern.length() || ignoreCase == null) {

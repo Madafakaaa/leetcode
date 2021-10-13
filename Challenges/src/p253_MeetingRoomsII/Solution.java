@@ -1,7 +1,5 @@
 package p253_MeetingRoomsII;
 
-import java.util.Arrays;
-
 /**
  * Given an array of meeting time intervals intervals where intervals[i] = [starti, endi], return the minimum number of conference rooms required.
  * <p>
@@ -21,14 +19,18 @@ class Solution {
             starts[i] = intervals[i][0];
             ends[i] = intervals[i][1];
         }
-        Arrays.sort(starts);
-        Arrays.sort(ends);
-        int share = 0;
-        for (int i = 0; i < intervals.length; i++) {
-            if (starts[i] >= ends[share]) {
-                share++;
+        int shareNum = 0;
+        int startIndex = 0;
+        int endIndex = 0;
+        while (startIndex < intervals.length && endIndex < intervals.length) {
+            if (starts[startIndex] < ends[endIndex]) {
+                startIndex++;
+            } else {
+                shareNum++;
+                startIndex++;
+                endIndex++;
             }
         }
-        return intervals.length - share;
+        return intervals.length - shareNum;
     }
 }

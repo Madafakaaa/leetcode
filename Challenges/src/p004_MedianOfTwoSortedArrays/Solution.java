@@ -16,34 +16,51 @@ package p004_MedianOfTwoSortedArrays;
  * Output: 2.50000
  * Explanation: merged array = [1,2,3,4] and median is (2 + 3) / 2 = 2.5.
  */
-class Solution {
+public class Solution {
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int[] nums = new int[nums1.length + nums2.length];
-        int i1 = 0, i2 = 0;
-        while (i1 < nums1.length && i2 < nums2.length) {
-            if (nums1[i1] < nums2[i2]) {
-                nums[i1 + i2] = nums1[i1];
-                i1++;
+        if (nums1.length > nums2.length) {
+            int[] temp = nums1;
+            nums1 = nums2;
+            nums2 = temp;
+        }
+
+        int m = nums1.length;
+        int n = nums2.length;
+
+        // 分割线左边的所有元素需要满足的个数 m + (n - m + 1) / 2;
+        int totalLeft = (m + n + 1) / 2;
+
+        // 在 nums1 的区间 [0, m] 里查找恰当的分割线，
+        // 使得 nums1[i - 1] <= nums2[j] && nums2[j - 1] <= nums1[i]
+        int left = 0;
+        int right = m;
+
+        while (left < right) {
+            int i = left + (right - left + 1) / 2;
+            int j = totalLeft - i;
+            if (nums1[i - 1] > nums2[j]) {
+                // 下一轮搜索的区间 [left, i - 1]
+                right = i - 1;
             } else {
-                nums[i1 + i2] = nums2[i2];
-                i2++;
+                // 下一轮搜索的区间 [i, right]
+                left = i;
             }
         }
-        while (i1 < nums1.length) {
-            nums[i1 + i2] = nums1[i1];
-            i1++;
-        }
-        while (i2 < nums2.length) {
-            nums[i1 + i2] = nums2[i2];
-            i2++;
-        }
-        if (nums.length % 2 == 1) {
-            return nums[(nums.length - 1) / 2];
+
+        int i = left;
+        int j = totalLeft - i;
+
+        int nums1LeftMax = i == 0 ? Integer.MIN_VALUE : nums1[i - 1];
+        int nums1RightMin = i == m ? Integer.MAX_VALUE : nums1[i];
+        int nums2LeftMax = j == 0 ? Integer.MIN_VALUE : nums2[j - 1];
+        int nums2RightMin = j == n ? Integer.MAX_VALUE : nums2[j];
+
+        if (((m + n) % 2) == 1) {
+            return Math.max(nums1LeftMax, nums2LeftMax);
         } else {
-            return (double) (nums[(nums.length - 1) / 2] + nums[nums.length / 2]) / 2;
+            return (double) ((Math.max(nums1LeftMax, nums2LeftMax) + Math.min(nums1RightMin, nums2RightMin))) / 2;
         }
     }
-
 }
 

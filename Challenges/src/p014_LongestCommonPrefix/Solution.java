@@ -7,27 +7,21 @@ class Solution {
         }
         StringBuffer result = new StringBuffer();
         int index = 0;
+        outLoop:
         while (true) {
             if (index >= strs[0].length()) {
                 break;
             }
             char temp = strs[0].charAt(index);
-            boolean equal = true;
             for (int i = 1; i < strs.length; i++) {
                 if (index >= strs[i].length()) {
-                    equal = false;
-                    break;
+                    break outLoop;
                 }
                 if (strs[i].charAt(index) != temp) {
-                    equal = false;
-                    break;
+                    break outLoop;
                 }
             }
-            if (equal) {
-                result.append(temp);
-            } else {
-                break;
-            }
+            result.append(temp);
             index++;
         }
         return result.toString();

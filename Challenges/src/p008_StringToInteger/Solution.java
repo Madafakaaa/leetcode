@@ -18,14 +18,15 @@ class Solution {
         }
         while (i < chars.length) {
             if (chars[i] >= '0' && chars[i] <= '9') {
-                if (res > (Integer.MAX_VALUE - chars[i] + '0') / 10) {
+                int temp = res;
+                res = 10 * res + chars[i] - '0';
+                if (res / 10 != temp) {
                     if (sign == 1) {
                         return Integer.MAX_VALUE;
                     } else {
                         return Integer.MIN_VALUE;
                     }
                 }
-                res = 10 * res + chars[i] - '0';
             } else {
                 return sign * res;
             }
