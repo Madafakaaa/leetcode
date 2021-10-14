@@ -1,5 +1,7 @@
 package p279_PerfectSquares;
 
+import java.util.Arrays;
+
 /**
  * Given an integer n, return the least number of perfect square numbers that sum to n.
  * <p>
@@ -15,31 +17,18 @@ package p279_PerfectSquares;
  * Explanation: 13 = 4 + 9.
  */
 class Solution {
-
     public int numSquares(int n) {
-        int[] nums = new int[n + 1];
-        for (int i = 0; i < nums.length; i++) {
-            nums[i] = Integer.MAX_VALUE;
-        }
-        int[] sqrs = new int[(int) Math.sqrt(n) + 1];
-        for (int i = 0; i < sqrs.length; i++) {
-            nums[i * i] = 1;
-            sqrs[i] = (i + 1) * (i + 1);
-        }
-        for (int i = 0; i < nums.length; i++) {
-            if (nums[i] == 1) continue;
-            int min = nums[i];
-            for (int s : sqrs) {
-                if (i - s > 0) {
-                    min = Integer.min(min, nums[i - s] + 1);
-                } else {
-                    break;
-                }
+        int dp[] = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+
+        dp[0] = 0;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j * j <= i; j++) {
+                dp[i] = Math.min(dp[i], 1 + dp[i - j * j]);
             }
-            nums[i] = min;
         }
 
-        return nums[n];
+        return dp[n];
     }
-
 }
