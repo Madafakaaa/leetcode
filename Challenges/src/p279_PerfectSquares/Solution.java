@@ -18,7 +18,7 @@ import java.util.Arrays;
  */
 class Solution {
     public int numSquares(int n) {
-        int dp[] = new int[n + 1];
+        int[] dp = new int[n + 1];
         Arrays.fill(dp, Integer.MAX_VALUE);
 
         dp[0] = 0;
